@@ -3,8 +3,12 @@
  * Helper functions to connect to different service databases
  */
 
-import postgres from 'postgres'
+import { config } from 'dotenv'
 import { drizzle } from 'drizzle-orm/postgres-js'
+import postgres from 'postgres'
+
+// Load environment variables from root .env
+config({ path: '../../.env' })
 
 /**
  * Create database connection
@@ -21,10 +25,10 @@ export function createConnection(databaseUrl: string) {
 export function getDatabaseUrl(service: 'auth' | 'products' | 'cart' | 'orders' | 'reviews') {
   const envKey = `${service.toUpperCase()}_DATABASE_URL`
   const url = process.env[envKey]
-  
+
   if (!url) {
     throw new Error(`${envKey} environment variable not set`)
   }
-  
+
   return url
 }

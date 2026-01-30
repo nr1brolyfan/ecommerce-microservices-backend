@@ -15,10 +15,10 @@
 - **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ✅ (6/6)
 - **FAZA 7**: Reviews Service ✅ (6/6)
-- **FAZA 8**: Testing & Documentation ⬜ (0/5)
+- **FAZA 8**: Testing & Documentation 🔄 (1/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 38/47 tasków (81%)
+**TOTAL PROGRESS**: 39/47 tasków (83%)
 
 ---
 
@@ -424,23 +424,23 @@
 
 ## FAZA 8: Testing & Documentation 🧪
 
-### [ ] 8.1 Seed Scripts
-- [ ] Zaimplementować `packages/scripts/src/seed/seed-auth.ts`:
-  - [ ] 1 admin user (admin@example.com / Admin123!)
-  - [ ] 5 regular users (używając Faker)
-- [ ] Zaimplementować `packages/scripts/src/seed/seed-products.ts`:
-  - [ ] 3-5 kategorii (Electronics, Clothing, Books, itp.)
-  - [ ] 20-30 produktów w różnych kategoriach (Faker + realistyczne ceny)
-- [ ] Zaimplementować `packages/scripts/src/seed/seed-orders.ts`:
-  - [ ] 5-10 przykładowych zamówień dla różnych użytkowników
-  - [ ] Różne statusy (pending, processing, shipped, delivered)
-- [ ] Zaimplementować `packages/scripts/src/seed/seed-reviews.ts`:
-  - [ ] 15-20 opinii dla różnych produktów
-  - [ ] Różne ratingi (1-5)
-- [ ] Zaimplementować `packages/scripts/src/seed/seed-all.ts`:
-  - [ ] Uruchamia wszystkie seedy w odpowiedniej kolejności
-- [ ] Dodać skrypt `pnpm seed` do root package.json
-- [ ] Przetestować seed: wyczyść bazy i uruchom `pnpm seed`
+### [x] 8.1 Seed Scripts
+- [x] Zaimplementować `packages/scripts/src/seed/seed-auth.ts`:
+  - [x] 1 admin user (admin@example.com / Password123!)
+  - [x] 5 regular users (używając Drizzle Seed)
+- [x] Zaimplementować `packages/scripts/src/seed/seed-products.ts`:
+  - [x] 5 kategorii (Electronics, Clothing, Books, Home & Garden, Sports & Outdoors)
+  - [x] 25 produktów w różnych kategoriach z realistycznymi danymi
+- [x] Zaimplementować `packages/scripts/src/seed/seed-orders.ts`:
+  - [x] 10 zamówień dla różnych użytkowników z prawdziwymi productami
+  - [x] Różne statusy (pending, processing, shipped, delivered, cancelled)
+- [x] Zaimplementować `packages/scripts/src/seed/seed-reviews.ts`:
+  - [x] 12 opinii dla różnych produktów (tylko dla delivered/shipped orders)
+  - [x] Różne ratingi (1-5) z realistycznymi tytułami i komentarzami
+- [x] Zaimplementować `packages/scripts/src/seed/seed-all.ts`:
+  - [x] Uruchamia wszystkie seedy w odpowiedniej kolejności
+- [x] Dodać skrypt `pnpm seed` do root package.json
+- [x] Przetestować seed: wyczyścić bazy i uruchomić `pnpm seed`
 
 ### [ ] 8.2 Postman Collection
 - [ ] Utworzyć kolekcję Postman "E-commerce Microservices"

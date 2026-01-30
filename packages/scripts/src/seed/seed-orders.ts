@@ -1,47 +1,144 @@
 /**
  * Seed Orders Service Database
  * Creates sample orders using Drizzle Seed
+ * NOTE: Requires auth and products databases to be seeded first
  */
 
-import { seed } from 'drizzle-seed'
-import { createConnection, getDatabaseUrl } from '../utils/database'
+import { sql } from 'drizzle-orm'
+import { decimal, integer, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { createConnection, getDatabaseUrl } from '../utils/database.js'
+
+// Define schema (copied from orders-service to avoid circular dependencies)
+const orderStatusEnum = pgEnum('order_status', [
+  'pending',
+  'processing',
+  'shipped',
+  'delivered',
+  'cancelled',
+])
+
+const orders = pgTable('orders', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull(),
+  status: orderStatusEnum('status').notNull().default('pending'),
+  totalAmount: decimal('total_amount', { precision: 10, scale: 2 }).notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+})
+
+const orderItems = pgTable('order_items', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orderId: uuid('order_id')
+    .notNull()
+    .references(() => orders.id, { onDelete: 'cascade' }),
+  productId: uuid('product_id').notNull(),
+  productName: varchar('product_name', { length: 255 }).notNull(),
+  quantity: integer('quantity').notNull(),
+  priceAtOrder: decimal('price_at_order', { precision: 10, scale: 2 }).notNull(),
+  subtotal: decimal('subtotal', { precision: 10, scale: 2 }).notNull(),
+})
 
 /**
- * Seed orders database
- * This will be implemented once orders-service schema is ready
+ * Seed orders database with sample orders
+ * Fetches real user IDs from auth DB and product IDs from products DB
  */
 export async function seedOrders() {
   console.log('🌱 Seeding orders database...')
 
   try {
-    const databaseUrl = getDatabaseUrl('orders')
-    const db = createConnection(databaseUrl)
+    const ordersDb = createConnection(getDatabaseUrl('orders'))
+    const authDb = createConnection(getDatabaseUrl('auth'))
+    const productsDb = createConnection(getDatabaseUrl('products'))
 
-    // TODO: Import schema from orders-service
-    // import { orders, orderItems } from '@repo/orders-service/schema'
-    
-    // Example of what will be implemented:
-    // await seed(db, { orders, orderItems }).refine((f) => ({
-    //   orders: {
-    //     count: 10,
-    //     columns: {
-    //       status: f.valuesFromArray({ values: ['pending', 'processing', 'shipped', 'delivered'] }),
-    //       totalAmount: f.number({ min: 50, max: 500, precision: 0.01 }),
-    //     },
-    //   },
-    //   orderItems: {
-    //     count: 25,
-    //     columns: {
-    //       productName: f.productName(),
-    //       quantity: f.int({ min: 1, max: 5 }),
-    //       priceAtOrder: f.number({ min: 9.99, max: 199.99, precision: 0.01 }),
-    //     },
-    //   },
-    // }))
+    // Fetch user IDs from auth database
+    const usersResult = await authDb.execute<{ id: string }>(
+      sql`SELECT id FROM users WHERE role = 'user' LIMIT 5`,
+    )
+    const users = Array.from(usersResult)
+    const userIds = users.map((u: any) => u.id)
+
+    if (userIds.length === 0) {
+      throw new Error('No users found in auth database. Please run seed-auth first.')
+    }
+
+    // Fetch product data from products database
+    const productsResult = await productsDb.execute<{
+      id: string
+      name: string
+      price: string
+    }>(sql`SELECT id, name, price FROM products LIMIT 15`)
+    const products = Array.from(productsResult)
+
+    if (products.length === 0) {
+      throw new Error('No products found in products database. Please run seed-products first.')
+    }
+
+    console.log(`   ✓ Found ${userIds.length} users and ${products.length} products`)
+
+    // Create 10 orders with different statuses
+    const orderStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled']
+    let totalOrders = 0
+    let totalOrderItems = 0
+
+    for (let i = 0; i < 10; i++) {
+      const userId = userIds[i % userIds.length]
+      const status = orderStatuses[i % orderStatuses.length]
+
+      // Randomly select 1-3 products for this order
+      const numItems = Math.floor(Math.random() * 3) + 1
+      const orderProducts = []
+      let orderTotal = 0
+
+      for (let j = 0; j < numItems; j++) {
+        const product = products[Math.floor(Math.random() * products.length)] as any
+        if (!product) continue
+
+        const quantity = Math.floor(Math.random() * 3) + 1
+        const priceAtOrder = parseFloat(product.price)
+        const subtotal = priceAtOrder * quantity
+
+        orderProducts.push({
+          productId: product.id,
+          productName: product.name,
+          quantity,
+          priceAtOrder: priceAtOrder.toFixed(2),
+          subtotal: subtotal.toFixed(2),
+        })
+
+        orderTotal += subtotal
+      }
+
+      if (orderProducts.length === 0) continue
+
+      // Insert order
+      const [insertedOrder] = await ordersDb
+        .insert(orders)
+        .values({
+          userId,
+          status: status as any,
+          totalAmount: orderTotal.toFixed(2),
+        })
+        .returning()
+
+      if (!insertedOrder) continue
+
+      // Insert order items
+      await ordersDb.insert(orderItems).values(
+        orderProducts.map((item) => ({
+          orderId: insertedOrder.id,
+          ...item,
+        })),
+      )
+
+      totalOrders++
+      totalOrderItems += orderProducts.length
+    }
 
     console.log('✅ Orders database seeded successfully')
-    console.log('   - 10 orders with various statuses')
-    console.log('   - 25 order items')
+    console.log(
+      `   - ${totalOrders} orders with various statuses (pending, processing, shipped, delivered, cancelled)`,
+    )
+    console.log(`   - ${totalOrderItems} order items`)
   } catch (error) {
     console.error('❌ Failed to seed orders database:', error)
     throw error

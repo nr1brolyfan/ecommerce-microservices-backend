@@ -3,10 +3,10 @@
  * Runs all seed scripts in the correct order
  */
 
-import { seedAuth } from './seed-auth'
-import { seedProducts } from './seed-products'
-import { seedOrders } from './seed-orders'
-import { seedReviews } from './seed-reviews'
+import { seedAuth } from './seed-auth.js'
+import { seedOrders } from './seed-orders.js'
+import { seedProducts } from './seed-products.js'
+import { seedReviews } from './seed-reviews.js'
 
 /**
  * Seed all databases in order

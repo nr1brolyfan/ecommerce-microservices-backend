@@ -12,6 +12,7 @@
     "seed:all": "tsx src/seed/seed-all.ts"
   },
   "dependencies": {
+    "dotenv": "^16.6.1",
     "drizzle-orm": "^0.39.2",
     "drizzle-seed": "^0.2.0",
     "postgres": "^3.4.5"

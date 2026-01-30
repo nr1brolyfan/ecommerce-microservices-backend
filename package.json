@@ -17,7 +17,7 @@
     "test": "pnpm --recursive test",
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage",
-    "db:migrate": "pnpm --recursive --filter \"./apps/*\" db:migrate",
+    "db:push": "pnpm --recursive --filter \"./apps/*\" db:push",
     "db:studio": "pnpm --recursive --filter \"./apps/*\" db:studio",
     "db:generate": "pnpm --recursive --filter \"./apps/*\" db:generate",
     "lint": "biome check",
@@ -27,7 +27,11 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f postgres",
-    "seed": "pnpm --filter scripts seed-all"
+    "seed": "pnpm --filter scripts seed:all",
+    "seed:auth": "pnpm --filter scripts seed:auth",
+    "seed:products": "pnpm --filter scripts seed:products",
+    "seed:orders": "pnpm --filter scripts seed:orders",
+    "seed:reviews": "pnpm --filter scripts seed:reviews"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.13",
