@@ -14,11 +14,11 @@
 - **FAZA 4**: Products Service ✅ (6/6)
 - **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ✅ (6/6)
-- **FAZA 7**: Reviews Service 🔄 (4/6)
+- **FAZA 7**: Reviews Service 🔄 (5/6)
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 36/47 tasków (77%)
+**TOTAL PROGRESS**: 37/47 tasków (79%)
 
 ---
 
@@ -398,19 +398,19 @@
   - [x] Zaimportować `type OrdersApp`
   - [x] `verifyPurchase(userId, productId)` - czy użytkownik kupił produkt
 
-### [ ] 7.5 Presentation Layer (API)
-- [ ] Utworzyć Hono app
-- [ ] Utworzyć validators (rating 1-5, title min 5 chars)
-- [ ] Utworzyć routes:
-  - [ ] POST /api/reviews (auth: user/admin) - wymaga weryfikacji zakupu
-  - [ ] GET /api/reviews/product/:productId (public)
-  - [ ] GET /api/reviews/user/:userId (auth: own user or admin)
-  - [ ] GET /api/reviews/product/:productId/stats (public)
-  - [ ] PUT /api/reviews/:id (auth: own user or admin)
-  - [ ] DELETE /api/reviews/:id (auth: own user or admin)
-- [ ] Dodać middleware weryfikacji zakupu w POST /api/reviews
-- [ ] Start serwera na porcie 3004
-- [ ] Wyeksportować `export type ReviewsApp = typeof app`
+### [x] 7.5 Presentation Layer (API)
+- [x] Utworzyć Hono app
+- [x] Utworzyć validators (rating 1-5, title min 5 chars)
+- [x] Utworzyć routes:
+  - [x] POST /api/reviews (auth: user/admin) - wymaga weryfikacji zakupu
+  - [x] GET /api/reviews/product/:productId (public)
+  - [x] GET /api/reviews/user/:userId (auth: own user or admin)
+  - [x] GET /api/reviews/product/:productId/stats (public)
+  - [x] PUT /api/reviews/:id (auth: own user or admin)
+  - [x] DELETE /api/reviews/:id (auth: own user or admin)
+- [x] Dodać middleware weryfikacji zakupu w POST /api/reviews
+- [x] Start serwera na porcie 3004
+- [x] Wyeksportować `export type ReviewsApp = typeof app`
 - [ ] Przetestować wszystkie endpointy w Postman
 
 ### [ ] 7.6 Business Logic Validation
