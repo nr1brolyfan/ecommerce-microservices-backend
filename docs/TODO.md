@@ -14,11 +14,11 @@
 - **FAZA 4**: Products Service ✅ (6/6)
 - **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ✅ (6/6)
-- **FAZA 7**: Reviews Service 🔄 (2/6)
+- **FAZA 7**: Reviews Service 🔄 (3/6)
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 34/47 tasków (72%)
+**TOTAL PROGRESS**: 35/47 tasków (74%)
 
 ---
 
@@ -377,17 +377,17 @@
   - [x] UNIQUE constraint (product_id, user_id) - jedna opinia na produkt
 - [x] Wygenerować i uruchomić migracje
 
-### [ ] 7.3 Domain & Application Layers
-- [ ] Utworzyć `domain/entities/Review.ts`
-- [ ] Utworzyć `domain/value-objects/Rating.ts` (1-5 validation)
-- [ ] Utworzyć `domain/repositories/IReviewRepository.ts`
-- [ ] Utworzyć use cases:
-  - [ ] `CreateReview.ts` (weryfikacja zakupu produktu)
-  - [ ] `GetReviewsByProduct.ts`
-  - [ ] `GetReviewsByUser.ts`
-  - [ ] `GetReviewStats.ts` (średnia ocena, dystrybucja)
-  - [ ] `UpdateReview.ts`
-  - [ ] `DeleteReview.ts`
+### [x] 7.3 Domain & Application Layers
+- [x] Utworzyć `domain/entities/Review.ts`
+- [x] Utworzyć `domain/value-objects/Rating.ts` (1-5 validation)
+- [x] Utworzyć `domain/repositories/IReviewRepository.ts`
+- [x] Utworzyć use cases:
+  - [x] `CreateReview.ts` (weryfikacja zakupu produktu)
+  - [x] `GetReviewsByProduct.ts`
+  - [x] `GetReviewsByUser.ts`
+  - [x] `GetReviewStats.ts` (średnia ocena, dystrybucja)
+  - [x] `UpdateReview.ts`
+  - [x] `DeleteReview.ts`
 
 ### [ ] 7.4 Infrastructure Layer (RPC Clients)
 - [ ] Zaimplementować `ReviewRepository.ts`
