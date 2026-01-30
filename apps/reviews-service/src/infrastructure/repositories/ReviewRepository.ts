@@ -1,4 +1,4 @@
-import { and, avg, count, eq, sql } from 'drizzle-orm'
+import { and, avg, count, eq } from 'drizzle-orm'
 import { Review } from '../../domain/entities/Review.js'
 import type { IReviewRepository, ReviewStats } from '../../domain/repositories/IReviewRepository.js'
 import { Rating } from '../../domain/value-objects/Rating.js'

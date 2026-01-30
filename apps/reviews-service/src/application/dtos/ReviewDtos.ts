@@ -5,14 +5,14 @@ export interface CreateReviewDto {
   orderId: string
   rating: number
   title: string
-  comment?: string
+  comment?: string | undefined
 }
 
 // Update Review DTO
 export interface UpdateReviewDto {
   rating: number
   title: string
-  comment?: string
+  comment?: string | undefined
 }
 
 // Review Response DTO

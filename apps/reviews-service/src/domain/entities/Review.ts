@@ -2,7 +2,7 @@ import { BaseEntity } from '@repo/shared-types/domain/entities'
 import { Rating } from '../value-objects/Rating.js'
 
 export class Review extends BaseEntity {
-  public updatedAt: Date
+  public override updatedAt: Date
 
   constructor(
     id: string,
