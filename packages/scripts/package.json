@@ -12,7 +12,6 @@
     "seed:all": "tsx src/seed/seed-all.ts"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.3.0",
     "drizzle-orm": "^0.39.2",
     "drizzle-seed": "^0.2.0",
     "postgres": "^3.4.5"
