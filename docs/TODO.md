@@ -8,7 +8,7 @@
 
 ## 📋 Progress Overview
 
-- **FAZA 1**: Setup & Infrastructure ⏳ (4/5)
+- **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ⬜ (0/4)
 - **FAZA 3**: Auth Service ⬜ (0/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 4/47 tasków (9%)
+**TOTAL PROGRESS**: 5/47 tasków (11%)
 
 ---
 
@@ -58,13 +58,13 @@
 - [x] Dodać dev dependencies (typescript, tsx, vitest)
 - [x] Utworzyć `.env.example` template
 
-### [ ] 1.5 Environment Variables
-- [ ] Utworzyć główny `.env` z:
-  - [ ] Połączenie PostgreSQL
-  - [ ] JWT_SECRET
-  - [ ] Service URLs (localhost:3000-3004)
-- [ ] Dodać `.env` do `.gitignore`
-- [ ] Zweryfikować że wszystkie zmienne są załadowane
+### [x] 1.5 Environment Variables
+- [x] Utworzyć główny `.env` z:
+  - [x] Połączenie PostgreSQL
+  - [x] JWT_SECRET
+  - [x] Service URLs (localhost:3000-3004)
+- [x] Dodać `.env` do `.gitignore`
+- [x] Zweryfikować że wszystkie zmienne są załadowane
 
 ---
 
