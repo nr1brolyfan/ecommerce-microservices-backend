@@ -1,6 +1,6 @@
 # @repo/shared-config
 
-Shared configuration files for TypeScript, ESLint, and Prettier across all microservices and packages.
+Shared configuration files for TypeScript and Biome across all microservices and packages.
 
 ## Usage
 
@@ -19,31 +19,33 @@ In your `tsconfig.json`:
 }
 ```
 
-### ESLint
+### Biome
 
-In your `eslint.config.js`:
+In your root `biome.json`:
 
-```js
-import sharedConfig from '@repo/shared-config/eslint.config.js'
-
-export default [
-  ...sharedConfig,
-  // Your custom rules here
-]
+```json
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "extends": ["./packages/shared-config/biome.json"]
+}
 ```
 
-### Prettier
+Or copy the config directly to your root and customize as needed.
 
-In your `prettier.config.js`:
+### Commands
 
-```js
-import sharedConfig from '@repo/shared-config/prettier.config.js'
+```bash
+# Format and fix issues
+pnpm biome check --write
 
-export default sharedConfig
+# Check for issues without fixing
+pnpm biome check
+
+# Format only
+pnpm biome format --write
 ```
 
 ## Included Configurations
 
 - **tsconfig.base.json** - TypeScript compiler options with strict mode
-- **eslint.config.js** - ESLint flat config with best practices
-- **prettier.config.js** - Prettier formatting rules
+- **biome.json** - Biome linter and formatter configuration with recommended rules
