@@ -9,7 +9,7 @@
 ## 📋 Progress Overview
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
-- **FAZA 2**: Shared Packages ⬜ (0/4)
+- **FAZA 2**: Shared Packages ⏳ (1/4)
 - **FAZA 3**: Auth Service ⬜ (0/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 5/47 tasków (11%)
+**TOTAL PROGRESS**: 6/47 tasków (13%)
 
 ---
 
@@ -70,12 +70,12 @@
 
 ## FAZA 2: Shared Packages 📦
 
-### [ ] 2.1 @repo/shared-config
-- [ ] Utworzyć `packages/shared-config/`
-- [ ] Utworzyć `tsconfig.base.json` z konfiguracją TypeScript
-- [ ] Utworzyć `eslint.config.js` z regułami ESLint
-- [ ] Utworzyć `prettier.config.js` z formatowaniem
-- [ ] Dodać `package.json` z exports
+### [x] 2.1 @repo/shared-config
+- [x] Utworzyć `packages/shared-config/`
+- [x] Utworzyć `tsconfig.base.json` z konfiguracją TypeScript
+- [x] Utworzyć `eslint.config.js` z regułami ESLint
+- [x] Utworzyć `prettier.config.js` z formatowaniem
+- [x] Dodać `package.json` z exports
 
 ### [ ] 2.2 @repo/shared-types
 - [ ] Utworzyć `packages/shared-types/` z strukturą DDD

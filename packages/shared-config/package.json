@@ -1,0 +1,17 @@
+{
+  "name": "@repo/shared-config",
+  "version": "1.0.0",
+  "description": "Shared configuration files for TypeScript, ESLint, and Prettier",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./eslint.config.js": "./eslint.config.js",
+    "./prettier.config.js": "./prettier.config.js"
+  },
+  "files": [
+    "tsconfig.base.json",
+    "eslint.config.js",
+    "prettier.config.js"
+  ]
+}
