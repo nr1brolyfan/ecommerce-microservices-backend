@@ -14,11 +14,11 @@
 - **FAZA 4**: Products Service ✅ (6/6)
 - **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ✅ (6/6)
-- **FAZA 7**: Reviews Service ⬜ (0/6)
+- **FAZA 7**: Reviews Service 🔄 (2/6)
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 32/47 tasków (68%)
+**TOTAL PROGRESS**: 34/47 tasków (72%)
 
 ---
 
@@ -371,11 +371,11 @@
 - [x] Utworzyć `tsconfig.json`
 - [x] Utworzyć `.env.example` (DATABASE_URL, PRODUCTS_SERVICE_URL, ORDERS_SERVICE_URL)
 
-### [ ] 7.2 Database Schema & Migrations
-- [ ] Utworzyć `infrastructure/database/schema.ts` z tabelą:
-  - [ ] `reviews` (id, product_id, user_id, order_id, rating 1-5, title, comment, created_at, updated_at)
-  - [ ] UNIQUE constraint (product_id, user_id) - jedna opinia na produkt
-- [ ] Wygenerować i uruchomić migracje
+### [x] 7.2 Database Schema & Migrations
+- [x] Utworzyć `infrastructure/database/schema.ts` z tabelą:
+  - [x] `reviews` (id, product_id, user_id, order_id, rating 1-5, title, comment, created_at, updated_at)
+  - [x] UNIQUE constraint (product_id, user_id) - jedna opinia na produkt
+- [x] Wygenerować i uruchomić migracje
 
 ### [ ] 7.3 Domain & Application Layers
 - [ ] Utworzyć `domain/entities/Review.ts`
