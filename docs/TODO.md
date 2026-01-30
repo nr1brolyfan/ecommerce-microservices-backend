@@ -9,7 +9,7 @@
 ## 📋 Progress Overview
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
-- **FAZA 2**: Shared Packages ⏳ (1/4)
+- **FAZA 2**: Shared Packages ⏳ (2/4)
 - **FAZA 3**: Auth Service ⬜ (0/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 6/47 tasków (13%)
+**TOTAL PROGRESS**: 7/47 tasków (15%)
 
 ---
 
@@ -77,20 +77,21 @@
 - [x] Utworzyć `prettier.config.js` z formatowaniem
 - [x] Dodać `package.json` z exports
 
-### [ ] 2.2 @repo/shared-types
-- [ ] Utworzyć `packages/shared-types/` z strukturą DDD
-- [ ] Zaimplementować `domain/entities/BaseEntity.ts`
-- [ ] Zaimplementować value objects:
-  - [ ] `domain/value-objects/Email.ts`
-  - [ ] `domain/value-objects/Password.ts`
-  - [ ] `domain/value-objects/Id.ts`
-- [ ] Utworzyć custom errors:
-  - [ ] `errors/DomainError.ts`
-  - [ ] `errors/ValidationError.ts`
-  - [ ] `errors/NotFoundError.ts`
-  - [ ] `errors/UnauthorizedError.ts`
-- [ ] Utworzyć strukturę dla DTOs (auth, products, cart, orders, reviews)
-- [ ] Dodać `package.json` i skonfigurować build
+### [x] 2.2 @repo/shared-types
+- [x] Utworzyć `packages/shared-types/` z strukturą DDD
+- [x] Zaimplementować `domain/entities/BaseEntity.ts`
+- [x] Zaimplementować value objects:
+  - [x] `domain/value-objects/Email.ts`
+  - [x] `domain/value-objects/Password.ts`
+  - [x] `domain/value-objects/Id.ts`
+- [x] Utworzyć custom errors:
+  - [x] `errors/DomainError.ts`
+  - [x] `errors/ValidationError.ts`
+  - [x] `errors/NotFoundError.ts`
+  - [x] `errors/UnauthorizedError.ts`
+  - [x] `errors/ForbiddenError.ts` (bonus)
+- [x] Utworzyć strukturę dla DTOs (auth, products, cart, orders, reviews)
+- [x] Dodać `package.json` i skonfigurować build
 
 ### [ ] 2.3 @repo/shared-utils
 - [ ] Utworzyć `packages/shared-utils/`

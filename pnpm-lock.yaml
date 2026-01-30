@@ -26,6 +26,15 @@ importers:
 
   packages/shared-config: {}
 
+  packages/shared-types:
+    devDependencies:
+      '@repo/shared-config':
+        specifier: workspace:*
+        version: link:../shared-config
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
 packages:
 
   '@biomejs/biome@2.3.13':
