@@ -1,8 +1,8 @@
-import type { IUserRepository } from '../../domain/repositories/IUserRepository'
-import { User } from '../../domain/entities/User'
+import type { IUserRepository } from '../../domain/repositories/IUserRepository.js'
+import { User } from '../../domain/entities/User.js'
 import { Password } from '@repo/shared-types'
-import { UserAlreadyExistsError } from '../../domain/errors/AuthErrors'
-import type { RegisterDto, RegisterResponseDto } from '../dtos/RegisterDto'
+import { UserAlreadyExistsError } from '../../domain/errors/AuthErrors.js'
+import type { RegisterDto, RegisterResponseDto } from '../dtos/RegisterDto.js'
 import { hashPassword } from '@repo/shared-utils'
 
 /**

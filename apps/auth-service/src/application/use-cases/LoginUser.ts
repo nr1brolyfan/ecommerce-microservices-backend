@@ -1,6 +1,6 @@
-import type { IUserRepository } from '../../domain/repositories/IUserRepository'
-import { InvalidCredentialsError } from '../../domain/errors/AuthErrors'
-import type { LoginDto, LoginResponseDto } from '../dtos/LoginDto'
+import type { IUserRepository } from '../../domain/repositories/IUserRepository.js'
+import { InvalidCredentialsError } from '../../domain/errors/AuthErrors.js'
+import type { LoginDto, LoginResponseDto } from '../dtos/LoginDto.js'
 import { comparePassword, generateToken } from '@repo/shared-utils'
 
 /**
@@ -8,7 +8,10 @@ import { comparePassword, generateToken } from '@repo/shared-utils'
  * Handles user authentication and JWT generation
  */
 export class LoginUser {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    private userRepository: IUserRepository,
+    private jwtSecret: string,
+  ) {}
 
   async execute(dto: LoginDto): Promise<LoginResponseDto> {
     // Find user by email
@@ -24,11 +27,14 @@ export class LoginUser {
     }
 
     // Generate JWT token
-    const token = await generateToken({
-      sub: user.id,
-      email: user.email.getValue(),
-      role: user.role,
-    })
+    const token = await generateToken(
+      {
+        sub: user.id,
+        email: user.email.getValue(),
+        role: user.role,
+      },
+      this.jwtSecret,
+    )
 
     // Return response
     return {

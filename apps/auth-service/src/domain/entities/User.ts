@@ -1,4 +1,4 @@
-import { BaseEntity, Email, Password } from '@repo/shared-types'
+import { BaseEntity, Email } from '@repo/shared-types'
 
 export type UserRole = 'user' | 'admin'
 

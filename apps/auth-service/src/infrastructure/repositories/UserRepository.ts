@@ -23,7 +23,7 @@ export class UserRepository implements IUserRepository {
       .where(eq(users.id, id))
       .limit(1)
 
-    if (result.length === 0) {
+    if (result.length === 0 || !result[0]) {
       return null
     }
 
@@ -40,7 +40,7 @@ export class UserRepository implements IUserRepository {
       .where(eq(users.email, email.toLowerCase()))
       .limit(1)
 
-    if (result.length === 0) {
+    if (result.length === 0 || !result[0]) {
       return null
     }
 
@@ -67,6 +67,10 @@ export class UserRepository implements IUserRepository {
       })
       .returning()
 
+    if (!result[0]) {
+      throw new Error('Failed to create user')
+    }
+
     return this.toDomain(result[0])
   }
 
@@ -88,6 +92,10 @@ export class UserRepository implements IUserRepository {
       })
       .where(eq(users.id, plainUser.id))
       .returning()
+
+    if (!result[0]) {
+      throw new Error('Failed to update user')
+    }
 
     return this.toDomain(result[0])
   }

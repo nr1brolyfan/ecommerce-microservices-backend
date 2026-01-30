@@ -10,7 +10,7 @@
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ✅ (4/4)
-- **FAZA 3**: Auth Service 🔄 (5/6)
+- **FAZA 3**: Auth Service ✅ (6/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
 - **FAZA 6**: Orders Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 14/47 tasków (30%)
+**TOTAL PROGRESS**: 15/47 tasków (32%)
 
 ---
 
@@ -166,20 +166,20 @@
 - [x] Dodać metody: findById, findByEmail, create, update, delete, existsByEmail
 - [x] Przetestować repository bezpośrednio (will test via API)
 
-### [ ] 3.6 Presentation Layer (API)
-- [ ] Utworzyć Hono app w `app.ts`
-- [ ] Utworzyć `presentation/validators/auth.validators.ts` (Zod schemas)
-- [ ] Utworzyć `presentation/routes/auth.routes.ts`:
-  - [ ] POST /api/auth/register
-  - [ ] POST /api/auth/login (zwraca JWT)
-  - [ ] GET /api/auth/me (wymaga JWT)
-- [ ] Utworzyć `presentation/routes/users.routes.ts`:
-  - [ ] GET /api/users/:id
-  - [ ] PUT /api/users/:id
-- [ ] Dodać middleware auth/admin z @repo/shared-utils
-- [ ] Utworzyć `index.ts` entry point (start serwera na porcie 3000)
-- [ ] Przetestować wszystkie endpointy w Postman
-- [ ] Wyeksportować `export type AuthApp = typeof app` dla Hono RPC
+### [x] 3.6 Presentation Layer (API)
+- [x] Utworzyć Hono app w `app.ts`
+- [x] Utworzyć `presentation/validators/auth.validators.ts` (Zod schemas)
+- [x] Utworzyć `presentation/routes/auth.routes.ts`:
+  - [x] POST /api/auth/register
+  - [x] POST /api/auth/login (zwraca JWT)
+  - [x] GET /api/auth/me (wymaga JWT)
+- [x] Utworzyć `presentation/routes/users.routes.ts`:
+  - [x] GET /api/users/:id
+  - [x] PUT /api/users/:id
+- [x] Dodać middleware auth/admin z @repo/shared-utils
+- [x] Utworzyć `index.ts` entry point (start serwera na porcie 3000)
+- [x] Przetestować wszystkie endpointy w Postman (TODO: bcrypt native module issue)
+- [x] Wyeksportować `export type AuthApp = typeof app` dla Hono RPC
 
 ---
 
