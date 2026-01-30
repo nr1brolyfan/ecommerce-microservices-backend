@@ -365,11 +365,11 @@
 
 ## FAZA 7: Reviews Service ⭐
 
-### [ ] 7.1 Setup Reviews Service
-- [ ] Utworzyć strukturę folderów DDD w `apps/reviews-service/src/`
-- [ ] Utworzyć `package.json` z dependencies
-- [ ] Utworzyć `tsconfig.json`
-- [ ] Utworzyć `.env.example` (DATABASE_URL, PRODUCTS_SERVICE_URL, ORDERS_SERVICE_URL)
+### [x] 7.1 Setup Reviews Service
+- [x] Utworzyć strukturę folderów DDD w `apps/reviews-service/src/`
+- [x] Utworzyć `package.json` z dependencies
+- [x] Utworzyć `tsconfig.json`
+- [x] Utworzyć `.env.example` (DATABASE_URL, PRODUCTS_SERVICE_URL, ORDERS_SERVICE_URL)
 
 ### [ ] 7.2 Database Schema & Migrations
 - [ ] Utworzyć `infrastructure/database/schema.ts` z tabelą:
