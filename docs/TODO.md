@@ -9,7 +9,7 @@
 ## 📋 Progress Overview
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
-- **FAZA 2**: Shared Packages ⏳ (2/4)
+- **FAZA 2**: Shared Packages ⏳ (3/4)
 - **FAZA 3**: Auth Service ⬜ (0/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 7/47 tasków (15%)
+**TOTAL PROGRESS**: 8/47 tasków (17%)
 
 ---
 
@@ -93,22 +93,21 @@
 - [x] Utworzyć strukturę dla DTOs (auth, products, cart, orders, reviews)
 - [x] Dodać `package.json` i skonfigurować build
 
-### [ ] 2.3 @repo/shared-utils
-- [ ] Utworzyć `packages/shared-utils/`
-- [ ] Zaimplementować JWT utilities:
-  - [ ] `jwt/generate.ts` - generowanie JWT (jose)
-  - [ ] `jwt/verify.ts` - weryfikacja JWT
-  - [ ] `jwt/types.ts` - typy payload
-- [ ] Zaimplementować auth middleware:
-  - [ ] `auth/middleware.ts` - authMiddleware
-  - [ ] `auth/middleware.ts` - requireAdmin
-  - [ ] `auth/password.ts` - hash/compare (bcrypt)
-- [ ] Zaimplementować logger:
-  - [ ] `logger/index.ts` - konfiguracja Pino
-- [ ] Zaimplementować response formatters:
-  - [ ] `response/success.ts`
-  - [ ] `response/error.ts`
-- [ ] Dodać `package.json` i dependencies (jose, bcrypt, pino)
+### [x] 2.3 @repo/shared-utils
+- [x] Utworzyć `packages/shared-utils/`
+- [x] Zaimplementować JWT utilities:
+  - [x] `jwt/generate.ts` - generowanie JWT (jose)
+  - [x] `jwt/verify.ts` - weryfikacja JWT
+  - [x] `jwt/types.ts` - typy payload
+- [x] Zaimplementować auth middleware:
+  - [x] `auth/middleware.ts` - authMiddleware, requireAdmin, requireOwnership
+  - [x] `auth/password.ts` - hash/compare (bcrypt)
+- [x] Zaimplementować logger:
+  - [x] `logger/index.ts` - konfiguracja Pino
+- [x] Zaimplementować response formatters:
+  - [x] `response/success.ts`
+  - [x] `response/error.ts`
+- [x] Dodać `package.json` i dependencies (jose, bcrypt, pino, hono)
 
 ### [ ] 2.4 @repo/scripts
 - [ ] Utworzyć `packages/scripts/`
