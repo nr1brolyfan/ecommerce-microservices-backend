@@ -8,7 +8,7 @@
 
 ## 📋 Progress Overview
 
-- **FAZA 1**: Setup & Infrastructure ⏳ (2/5)
+- **FAZA 1**: Setup & Infrastructure ⏳ (3/5)
 - **FAZA 2**: Shared Packages ⬜ (0/4)
 - **FAZA 3**: Auth Service ⬜ (0/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 2/47 tasków (4%)
+**TOTAL PROGRESS**: 3/47 tasków (6%)
 
 ---
 
@@ -43,11 +43,11 @@
   - [x] `apps/orders-service/`
   - [x] `apps/reviews-service/`
 
-### [ ] 1.3 PostgreSQL Setup
-- [ ] Utworzyć `docker-compose.yml` dla PostgreSQL
-- [ ] Utworzyć `scripts/init-databases.sql` (5 baz danych)
-- [ ] Uruchomić PostgreSQL (`docker-compose up -d`)
-- [ ] Zweryfikować połączenie z bazą (`psql` lub pgAdmin)
+### [x] 1.3 PostgreSQL Setup
+- [x] Utworzyć `docker-compose.yml` dla PostgreSQL
+- [x] Utworzyć `scripts/init-databases.sql` (5 baz danych)
+- [x] Uruchomić PostgreSQL (`docker-compose up -d`)
+- [x] Zweryfikować połączenie z bazą (`psql` lub pgAdmin)
 
 ### [ ] 1.4 Root Package Configuration
 - [ ] Utworzyć root `package.json` z workspace scripts:
