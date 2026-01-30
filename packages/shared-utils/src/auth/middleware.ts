@@ -4,8 +4,8 @@
 
 import type { Context, Next } from 'hono'
 import { UnauthorizedError, ForbiddenError } from '@repo/shared-types'
-import { verifyToken } from '../jwt/verify'
-import type { JWTPayload } from '../jwt/types'
+import { verifyToken } from '../jwt/verify.js'
+import type { JWTPayload } from '../jwt/types.js'
 
 /**
  * Auth middleware - verifies JWT token

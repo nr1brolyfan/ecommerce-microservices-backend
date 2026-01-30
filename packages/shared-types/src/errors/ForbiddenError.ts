@@ -3,7 +3,7 @@
  * Thrown when user doesn't have permission for the action
  */
 
-import { DomainError } from './DomainError'
+import { DomainError } from './DomainError.js'
 
 export class ForbiddenError extends DomainError {
   constructor(message = 'Forbidden: insufficient permissions') {

@@ -3,7 +3,7 @@
  * Thrown when authentication fails or token is invalid
  */
 
-import { DomainError } from './DomainError'
+import { DomainError } from './DomainError.js'
 
 export class UnauthorizedError extends DomainError {
   constructor(message = 'Unauthorized') {

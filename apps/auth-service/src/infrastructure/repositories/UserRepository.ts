@@ -1,10 +1,10 @@
 import { eq } from 'drizzle-orm'
-import type { IUserRepository } from '../../domain/repositories/IUserRepository'
-import { User } from '../../domain/entities/User'
+import type { IUserRepository } from '../../domain/repositories/IUserRepository.js'
+import { User } from '../../domain/entities/User.js'
 import { Email } from '@repo/shared-types'
-import { db } from '../database/connection'
-import { users } from '../database/schema'
-import type { Database } from '../database/connection'
+import { db } from '../database/connection.js'
+import { users } from '../database/schema.js'
+import type { Database } from '../database/connection.js'
 
 /**
  * User Repository Implementation

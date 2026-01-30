@@ -3,7 +3,7 @@
  * Thrown when a requested resource is not found
  */
 
-import { DomainError } from './DomainError'
+import { DomainError } from './DomainError.js'
 
 export class NotFoundError extends DomainError {
   constructor(
