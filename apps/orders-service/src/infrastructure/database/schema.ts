@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm'
 import { decimal, integer, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 // Order status ENUM
@@ -31,6 +32,18 @@ export const orderItems = pgTable('order_items', {
   priceAtOrder: decimal('price_at_order', { precision: 10, scale: 2 }).notNull(), // snapshot
   subtotal: decimal('subtotal', { precision: 10, scale: 2 }).notNull(),
 })
+
+// Relations
+export const ordersRelations = relations(orders, ({ many }) => ({
+  items: many(orderItems),
+}))
+
+export const orderItemsRelations = relations(orderItems, ({ one }) => ({
+  order: one(orders, {
+    fields: [orderItems.orderId],
+    references: [orders.id],
+  }),
+}))
 
 // Type exports for TypeScript
 export type Order = typeof orders.$inferSelect
