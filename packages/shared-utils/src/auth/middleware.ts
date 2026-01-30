@@ -26,6 +26,7 @@ export function authMiddleware(secret: string) {
       c.set('user', payload)
       await next()
     } catch (error) {
+      console.error('Token verification failed:', error)
       throw new UnauthorizedError('Invalid or expired token')
     }
   }
