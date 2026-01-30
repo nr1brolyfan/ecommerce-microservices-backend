@@ -10,7 +10,7 @@
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ✅ (4/4)
-- **FAZA 3**: Auth Service 🔄 (2/6)
+- **FAZA 3**: Auth Service 🔄 (3/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
 - **FAZA 6**: Orders Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 11/47 tasków (23%)
+**TOTAL PROGRESS**: 12/47 tasków (26%)
 
 ---
 
@@ -143,12 +143,12 @@
 - [x] Wygenerować migracje (`drizzle-kit generate`)
 - [x] Uruchomić migracje (`drizzle-kit push`)
 
-### [ ] 3.3 Domain Layer
-- [ ] Utworzyć `domain/entities/User.ts` entity
-- [ ] Utworzyć `domain/value-objects/Email.ts` (walidacja email)
-- [ ] Utworzyć `domain/value-objects/Password.ts` (walidacja hasła)
-- [ ] Utworzyć `domain/repositories/IUserRepository.ts` interface
-- [ ] Utworzyć `domain/errors/AuthErrors.ts` (UserNotFound, InvalidCredentials)
+### [x] 3.3 Domain Layer
+- [x] Utworzyć `domain/entities/User.ts` entity
+- [x] Utworzyć `domain/value-objects/Email.ts` (walidacja email) - używa z shared-types
+- [x] Utworzyć `domain/value-objects/Password.ts` (walidacja hasła) - używa z shared-types
+- [x] Utworzyć `domain/repositories/IUserRepository.ts` interface
+- [x] Utworzyć `domain/errors/AuthErrors.ts` (UserNotFound, InvalidCredentials)
 
 ### [ ] 3.4 Application Layer
 - [ ] Utworzyć use cases:
