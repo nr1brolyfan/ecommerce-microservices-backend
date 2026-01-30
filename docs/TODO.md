@@ -14,11 +14,11 @@
 - **FAZA 4**: Products Service ✅ (6/6)
 - **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ✅ (6/6)
-- **FAZA 7**: Reviews Service 🔄 (3/6)
+- **FAZA 7**: Reviews Service 🔄 (4/6)
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 35/47 tasków (74%)
+**TOTAL PROGRESS**: 36/47 tasków (77%)
 
 ---
 
@@ -389,14 +389,14 @@
   - [x] `UpdateReview.ts`
   - [x] `DeleteReview.ts`
 
-### [ ] 7.4 Infrastructure Layer (RPC Clients)
-- [ ] Zaimplementować `ReviewRepository.ts`
-- [ ] Dodać metodę `getAverageRating(productId)` i `getRatingDistribution(productId)`
-- [ ] Utworzyć `infrastructure/clients/ProductsClient.ts`:
-  - [ ] `getProduct(id)` - weryfikacja czy produkt istnieje
-- [ ] Utworzyć `infrastructure/clients/OrdersClient.ts`:
-  - [ ] Zaimportować `type OrdersApp`
-  - [ ] `verifyPurchase(userId, productId)` - czy użytkownik kupił produkt
+### [x] 7.4 Infrastructure Layer (RPC Clients)
+- [x] Zaimplementować `ReviewRepository.ts`
+- [x] Dodać metodę `getAverageRating(productId)` i `getRatingDistribution(productId)`
+- [x] Utworzyć `infrastructure/clients/ProductsClient.ts`:
+  - [x] `getProduct(id)` - weryfikacja czy produkt istnieje
+- [x] Utworzyć `infrastructure/clients/OrdersClient.ts`:
+  - [x] Zaimportować `type OrdersApp`
+  - [x] `verifyPurchase(userId, productId)` - czy użytkownik kupił produkt
 
 ### [ ] 7.5 Presentation Layer (API)
 - [ ] Utworzyć Hono app
