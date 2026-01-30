@@ -1,0 +1,27 @@
+{
+  "name": "@repo/scripts",
+  "version": "1.0.0",
+  "description": "Database seeding scripts using Drizzle Seed",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seed:auth": "tsx src/seed/seed-auth.ts",
+    "seed:products": "tsx src/seed/seed-products.ts",
+    "seed:orders": "tsx src/seed/seed-orders.ts",
+    "seed:reviews": "tsx src/seed/seed-reviews.ts",
+    "seed:all": "tsx src/seed/seed-all.ts"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "drizzle-orm": "^0.39.2",
+    "drizzle-seed": "^0.2.0",
+    "postgres": "^3.4.5"
+  },
+  "devDependencies": {
+    "@repo/shared-config": "workspace:*",
+    "@repo/shared-utils": "workspace:*",
+    "@types/node": "^20.19.30",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -9,7 +9,7 @@
 ## 📋 Progress Overview
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
-- **FAZA 2**: Shared Packages ⏳ (3/4)
+- **FAZA 2**: Shared Packages ✅ (4/4)
 - **FAZA 3**: Auth Service ⬜ (0/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 8/47 tasków (17%)
+**TOTAL PROGRESS**: 9/47 tasków (19%)
 
 ---
 
@@ -109,11 +109,16 @@
   - [x] `response/error.ts`
 - [x] Dodać `package.json` i dependencies (jose, bcrypt, pino, hono)
 
-### [ ] 2.4 @repo/scripts
-- [ ] Utworzyć `packages/scripts/`
-- [ ] Dodać `package.json` z dependencies (@faker-js/faker, drizzle-orm)
-- [ ] Utworzyć `utils/fake-data.ts` z helperami Faker
-- [ ] Przygotować strukturę dla seed scripts (implementacja w późniejszych fazach)
+### [x] 2.4 @repo/scripts
+- [x] Utworzyć `packages/scripts/`
+- [x] Dodać `package.json` z dependencies (drizzle-seed, drizzle-orm, postgres)
+- [x] Utworzyć `utils/database.ts` z connection helpers
+- [x] Przygotować strukturę dla seed scripts z Drizzle Seed:
+  - [x] `seed/seed-auth.ts` (TODO: implement when schema ready)
+  - [x] `seed/seed-products.ts` (TODO: implement when schema ready)
+  - [x] `seed/seed-orders.ts` (TODO: implement when schema ready)
+  - [x] `seed/seed-reviews.ts` (TODO: implement when schema ready)
+  - [x] `seed/seed-all.ts` (orchestrates all seeds)
 
 ---
 
