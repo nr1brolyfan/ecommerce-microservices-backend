@@ -10,7 +10,7 @@
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ✅ (4/4)
-- **FAZA 3**: Auth Service 🔄 (3/6)
+- **FAZA 3**: Auth Service 🔄 (4/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
 - **FAZA 6**: Orders Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 12/47 tasków (26%)
+**TOTAL PROGRESS**: 13/47 tasków (28%)
 
 ---
 
@@ -150,16 +150,16 @@
 - [x] Utworzyć `domain/repositories/IUserRepository.ts` interface
 - [x] Utworzyć `domain/errors/AuthErrors.ts` (UserNotFound, InvalidCredentials)
 
-### [ ] 3.4 Application Layer
-- [ ] Utworzyć use cases:
-  - [ ] `application/use-cases/RegisterUser.ts`
-  - [ ] `application/use-cases/LoginUser.ts`
-  - [ ] `application/use-cases/GetUserById.ts`
-  - [ ] `application/use-cases/UpdateUser.ts`
-- [ ] Utworzyć DTOs:
-  - [ ] `application/dtos/RegisterDto.ts`
-  - [ ] `application/dtos/LoginDto.ts`
-  - [ ] `application/dtos/UpdateUserDto.ts`
+### [x] 3.4 Application Layer
+- [x] Utworzyć use cases:
+  - [x] `application/use-cases/RegisterUser.ts`
+  - [x] `application/use-cases/LoginUser.ts`
+  - [x] `application/use-cases/GetUserById.ts`
+  - [x] `application/use-cases/UpdateUser.ts`
+- [x] Utworzyć DTOs:
+  - [x] `application/dtos/RegisterDto.ts`
+  - [x] `application/dtos/LoginDto.ts`
+  - [x] `application/dtos/UpdateUserDto.ts`
 
 ### [ ] 3.5 Infrastructure Layer
 - [ ] Zaimplementować `infrastructure/repositories/UserRepository.ts` (implements IUserRepository)
