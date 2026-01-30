@@ -1,5 +1,6 @@
 import { zValidator } from '@hono/zod-validator'
 import { authMiddleware } from '@repo/shared-utils/auth'
+import type { JWTPayload } from '@repo/shared-utils/jwt'
 import { errorResponse, successResponse } from '@repo/shared-utils/response'
 import { Hono } from 'hono'
 // Import use cases
@@ -23,7 +24,11 @@ import {
   userIdParamSchema,
 } from '../validators/review.validators.js'
 
-const app = new Hono()
+type Variables = {
+  user: JWTPayload
+}
+
+const app = new Hono<{ Variables: Variables }>()
 
 // Create auth middleware with JWT secret
 const auth = authMiddleware(config.jwtSecret)
@@ -45,7 +50,7 @@ const deleteReviewUseCase = new DeleteReview(reviewRepository)
 app.post('/', auth, zValidator('json', createReviewSchema), async (c) => {
   try {
     const body = c.req.valid('json')
-    const user = c.get('user') as any
+    const user = c.get('user')
 
     // Verify user can only create reviews for themselves (unless admin)
     if (user.role !== 'admin' && user.sub !== body.userId) {
@@ -56,6 +61,22 @@ app.post('/', auth, zValidator('json', createReviewSchema), async (c) => {
     return c.json(successResponse(review), 201)
   } catch (error: any) {
     console.error('Error creating review:', error)
+
+    // Handle service unavailable errors
+    if (error.message?.includes('service unavailable')) {
+      return c.json(errorResponse(error.message), 503)
+    }
+
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      return c.json(errorResponse(error.message), 400)
+    }
+
+    // Handle not found errors
+    if (error.name === 'NotFoundError') {
+      return c.json(errorResponse(error.message), 404)
+    }
+
     return c.json(errorResponse(error.message || 'Failed to create review'), 400)
   }
 })
@@ -90,7 +111,7 @@ app.get('/product/:productId/stats', zValidator('param', productIdParamSchema), 
 app.get('/user/:userId', auth, zValidator('param', userIdParamSchema), async (c) => {
   try {
     const { userId } = c.req.valid('param')
-    const user = c.get('user') as any
+    const user = c.get('user')
 
     // Verify user can only view their own reviews (unless admin)
     if (user.role !== 'admin' && user.sub !== userId) {
@@ -115,7 +136,7 @@ app.put(
     try {
       const { id } = c.req.valid('param')
       const body = c.req.valid('json')
-      const user = c.get('user') as any
+      const user = c.get('user')
 
       const review = await updateReviewUseCase.execute(id, user.sub, body as any)
       return c.json(successResponse(review))
@@ -130,7 +151,7 @@ app.put(
 app.delete('/:id', auth, zValidator('param', reviewIdParamSchema), async (c) => {
   try {
     const { id } = c.req.valid('param')
-    const user = c.get('user') as any
+    const user = c.get('user')
 
     await deleteReviewUseCase.execute(id, user.sub)
     return c.json(successResponse({ message: 'Review deleted successfully' }))

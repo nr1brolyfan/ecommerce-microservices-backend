@@ -25,7 +25,11 @@ export class OrdersClient implements IOrderServiceClient {
 
   async getOrder(orderId: string): Promise<Order | null> {
     try {
-      const res = await fetch(`${this.baseUrl}/api/orders/${orderId}`)
+      const res = await fetch(`${this.baseUrl}/api/orders/${orderId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
       if (!res.ok) {
         if (res.status === 404) {
@@ -41,8 +45,12 @@ export class OrdersClient implements IOrderServiceClient {
 
       return data.data
     } catch (error) {
+      if (error instanceof Error && error.message.includes('fetch')) {
+        console.error('Orders service is unreachable:', error)
+        throw new Error('Orders service unavailable')
+      }
       console.error('Error fetching order:', error)
-      throw new Error('Orders service unavailable')
+      throw error
     }
   }
 }

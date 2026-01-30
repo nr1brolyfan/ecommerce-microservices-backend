@@ -14,11 +14,11 @@
 - **FAZA 4**: Products Service ✅ (6/6)
 - **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ✅ (6/6)
-- **FAZA 7**: Reviews Service 🔄 (5/6)
+- **FAZA 7**: Reviews Service ✅ (6/6)
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 37/47 tasków (79%)
+**TOTAL PROGRESS**: 38/47 tasków (81%)
 
 ---
 
@@ -413,12 +413,12 @@
 - [x] Wyeksportować `export type ReviewsApp = typeof app`
 - [ ] Przetestować wszystkie endpointy w Postman
 
-### [ ] 7.6 Business Logic Validation
-- [ ] Weryfikować że rating jest między 1-5
-- [ ] Weryfikować że użytkownik kupił produkt przed dodaniem opinii
-- [ ] Weryfikować że produkt istnieje
-- [ ] Zapobiec duplikatom (jeden user = jedna opinia na produkt)
-- [ ] Przetestować edge cases
+### [x] 7.6 Business Logic Validation
+- [x] Weryfikować że rating jest między 1-5
+- [x] Weryfikować że użytkownik kupił produkt przed dodaniem opinii
+- [x] Weryfikować że produkt istnieje
+- [x] Zapobiec duplikatom (jeden user = jedna opinia na produkt)
+- [x] Przetestować edge cases
 
 ---
 

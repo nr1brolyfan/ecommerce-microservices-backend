@@ -13,7 +13,11 @@ export class ProductsClient implements IProductServiceClient {
 
   async getProduct(productId: string): Promise<Product | null> {
     try {
-      const res = await fetch(`${this.baseUrl}/api/products/${productId}`)
+      const res = await fetch(`${this.baseUrl}/api/products/${productId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
       if (!res.ok) {
         if (res.status === 404) {
@@ -29,8 +33,12 @@ export class ProductsClient implements IProductServiceClient {
 
       return data.data
     } catch (error) {
+      if (error instanceof Error && error.message.includes('fetch')) {
+        console.error('Products service is unreachable:', error)
+        throw new Error('Products service unavailable')
+      }
       console.error('Error fetching product:', error)
-      throw new Error('Products service unavailable')
+      throw error
     }
   }
 }

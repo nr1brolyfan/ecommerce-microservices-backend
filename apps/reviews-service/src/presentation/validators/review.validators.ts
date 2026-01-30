@@ -12,9 +12,15 @@ export const createReviewSchema = z.object({
     .max(5, 'Rating must be at most 5'),
   title: z
     .string()
+    .trim()
     .min(5, 'Title must be at least 5 characters')
     .max(255, 'Title must be at most 255 characters'),
-  comment: z.string().max(2000, 'Comment must be at most 2000 characters').optional(),
+  comment: z
+    .string()
+    .trim()
+    .max(2000, 'Comment must be at most 2000 characters')
+    .optional()
+    .or(z.literal('')),
 })
 
 // Update review schema
@@ -26,9 +32,15 @@ export const updateReviewSchema = z.object({
     .max(5, 'Rating must be at most 5'),
   title: z
     .string()
+    .trim()
     .min(5, 'Title must be at least 5 characters')
     .max(255, 'Title must be at most 255 characters'),
-  comment: z.string().max(2000, 'Comment must be at most 2000 characters').optional(),
+  comment: z
+    .string()
+    .trim()
+    .max(2000, 'Comment must be at most 2000 characters')
+    .optional()
+    .or(z.literal('')),
 })
 
 // Review ID param schema
