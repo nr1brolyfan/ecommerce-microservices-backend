@@ -1,6 +1,4 @@
-import { DomainError } from '@repo/shared-types/errors/DomainError'
-import { NotFoundError } from '@repo/shared-types/errors/NotFoundError'
-import { ValidationError } from '@repo/shared-types/errors/ValidationError'
+import { DomainError, NotFoundError, ValidationError } from '@repo/shared-types'
 
 /**
  * User Not Found Error

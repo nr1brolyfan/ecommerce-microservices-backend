@@ -1,6 +1,4 @@
-import { BaseEntity } from '@repo/shared-types/domain/entities/BaseEntity'
-import { Email } from '@repo/shared-types/domain/value-objects/Email'
-import { Password } from '@repo/shared-types/domain/value-objects/Password'
+import { BaseEntity, Email, Password } from '@repo/shared-types'
 
 export type UserRole = 'user' | 'admin'
 

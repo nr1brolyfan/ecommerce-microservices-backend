@@ -10,7 +10,7 @@
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ✅ (4/4)
-- **FAZA 3**: Auth Service 🔄 (4/6)
+- **FAZA 3**: Auth Service 🔄 (5/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
 - **FAZA 6**: Orders Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 13/47 tasków (28%)
+**TOTAL PROGRESS**: 14/47 tasków (30%)
 
 ---
 
@@ -161,10 +161,10 @@
   - [x] `application/dtos/LoginDto.ts`
   - [x] `application/dtos/UpdateUserDto.ts`
 
-### [ ] 3.5 Infrastructure Layer
-- [ ] Zaimplementować `infrastructure/repositories/UserRepository.ts` (implements IUserRepository)
-- [ ] Dodać metody: findById, findByEmail, create, update
-- [ ] Przetestować repository bezpośrednio
+### [x] 3.5 Infrastructure Layer
+- [x] Zaimplementować `infrastructure/repositories/UserRepository.ts` (implements IUserRepository)
+- [x] Dodać metody: findById, findByEmail, create, update, delete, existsByEmail
+- [x] Przetestować repository bezpośrednio (will test via API)
 
 ### [ ] 3.6 Presentation Layer (API)
 - [ ] Utworzyć Hono app w `app.ts`

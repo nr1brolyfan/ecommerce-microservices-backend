@@ -1,9 +1,9 @@
-import { IUserRepository } from '../../domain/repositories/IUserRepository.js'
-import { User } from '../../domain/entities/User.js'
-import { Password } from '@repo/shared-types/domain/value-objects/Password'
-import { UserAlreadyExistsError } from '../../domain/errors/AuthErrors.js'
-import { RegisterDto, RegisterResponseDto } from '../dtos/RegisterDto.js'
-import { hashPassword } from '@repo/shared-utils/auth/password'
+import type { IUserRepository } from '../../domain/repositories/IUserRepository'
+import { User } from '../../domain/entities/User'
+import { Password } from '@repo/shared-types'
+import { UserAlreadyExistsError } from '../../domain/errors/AuthErrors'
+import type { RegisterDto, RegisterResponseDto } from '../dtos/RegisterDto'
+import { hashPassword } from '@repo/shared-utils'
 
 /**
  * Register User Use Case

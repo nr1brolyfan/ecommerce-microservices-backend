@@ -1,6 +1,6 @@
-import { IUserRepository } from '../../domain/repositories/IUserRepository.js'
-import { UserNotFoundError } from '../../domain/errors/AuthErrors.js'
-import { UserResponseDto } from '../dtos/UpdateUserDto.js'
+import type { IUserRepository } from '../../domain/repositories/IUserRepository'
+import { UserNotFoundError } from '../../domain/errors/AuthErrors'
+import type { UserResponseDto } from '../dtos/UpdateUserDto'
 
 /**
  * Get User By ID Use Case

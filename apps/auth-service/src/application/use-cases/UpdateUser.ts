@@ -1,7 +1,7 @@
-import { IUserRepository } from '../../domain/repositories/IUserRepository.js'
-import { Email } from '@repo/shared-types/domain/value-objects/Email'
-import { UserNotFoundError, UserAlreadyExistsError } from '../../domain/errors/AuthErrors.js'
-import { UpdateUserDto, UserResponseDto } from '../dtos/UpdateUserDto.js'
+import type { IUserRepository } from '../../domain/repositories/IUserRepository'
+import { Email } from '@repo/shared-types'
+import { UserNotFoundError, UserAlreadyExistsError } from '../../domain/errors/AuthErrors'
+import type { UpdateUserDto, UserResponseDto } from '../dtos/UpdateUserDto'
 
 /**
  * Update User Use Case

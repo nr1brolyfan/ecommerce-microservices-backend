@@ -1,8 +1,7 @@
-import { IUserRepository } from '../../domain/repositories/IUserRepository.js'
-import { InvalidCredentialsError } from '../../domain/errors/AuthErrors.js'
-import { LoginDto, LoginResponseDto } from '../dtos/LoginDto.js'
-import { comparePassword } from '@repo/shared-utils/auth/password'
-import { generateToken } from '@repo/shared-utils/jwt/generate'
+import type { IUserRepository } from '../../domain/repositories/IUserRepository'
+import { InvalidCredentialsError } from '../../domain/errors/AuthErrors'
+import type { LoginDto, LoginResponseDto } from '../dtos/LoginDto'
+import { comparePassword, generateToken } from '@repo/shared-utils'
 
 /**
  * Login User Use Case
