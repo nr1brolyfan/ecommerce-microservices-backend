@@ -15,10 +15,10 @@
 - **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ✅ (6/6)
 - **FAZA 7**: Reviews Service ✅ (6/6)
-- **FAZA 8**: Testing & Documentation 🔄 (1/5)
+- **FAZA 8**: Testing & Documentation 🔄 (2/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 39/47 tasków (83%)
+**TOTAL PROGRESS**: 40/47 tasków (85%)
 
 ---
 
@@ -442,42 +442,48 @@
 - [x] Dodać skrypt `pnpm seed` do root package.json
 - [x] Przetestować seed: wyczyścić bazy i uruchomić `pnpm seed`
 
-### [ ] 8.2 Postman Collection
-- [ ] Utworzyć kolekcję Postman "E-commerce Microservices"
-- [ ] Utworzyć folder dla każdego serwisu
-- [ ] Dodać requesty dla Auth Service:
-  - [ ] Register User
-  - [ ] Login User (zapisz token do zmiennej)
-  - [ ] Get Current User (używa tokenu)
-  - [ ] Get User by ID
-  - [ ] Update User
-- [ ] Dodać requesty dla Products Service:
-  - [ ] Get All Products
-  - [ ] Get Product by ID
-  - [ ] Create Product (admin, używa tokenu)
-  - [ ] Update Product (admin)
-  - [ ] Delete Product (admin)
-  - [ ] Get Categories
-  - [ ] Create Category (admin)
-- [ ] Dodać requesty dla Cart Service:
-  - [ ] Get Cart
-  - [ ] Add Item to Cart
-  - [ ] Update Item Quantity
-  - [ ] Remove Item
-  - [ ] Clear Cart
-- [ ] Dodać requesty dla Orders Service:
-  - [ ] Create Order
-  - [ ] Get Order by ID
-  - [ ] Get User Orders
-  - [ ] Update Order Status (admin)
-- [ ] Dodać requesty dla Reviews Service:
-  - [ ] Create Review
-  - [ ] Get Product Reviews
-  - [ ] Get Review Stats
-  - [ ] Update Review
-  - [ ] Delete Review
-- [ ] Skonfigurować Environment variables (base URLs, token, userId)
-- [ ] Wyeksportować kolekcję do `postman_collection.json`
+### [x] 8.2 Postman Collection
+- [x] Utworzyć kolekcję Postman "E-commerce Microservices"
+- [x] Utworzyć folder dla każdego serwisu
+- [x] Dodać requesty dla Auth Service:
+  - [x] Register User
+  - [x] Login User (zapisz token do zmiennej)
+  - [x] Login Admin (zapisz admin_token)
+  - [x] Get Current User (używa tokenu)
+  - [x] Get User by ID
+  - [x] Update User
+- [x] Dodać requesty dla Products Service:
+  - [x] Get All Products
+  - [x] Get Products with Filters (inStock, price range, category)
+  - [x] Get Product by ID
+  - [x] Create Product (admin, używa tokenu)
+  - [x] Update Product (admin)
+  - [x] Delete Product (admin)
+  - [x] Get All Categories
+  - [x] Get Category by ID
+  - [x] Create Category (admin)
+- [x] Dodać requesty dla Cart Service:
+  - [x] Get Cart
+  - [x] Add Item to Cart
+  - [x] Update Cart Item Quantity
+  - [x] Remove Item from Cart
+  - [x] Clear Cart
+- [x] Dodać requesty dla Orders Service:
+  - [x] Create Order
+  - [x] Get Order by ID
+  - [x] Get User Orders
+  - [x] Update Order Status (admin)
+- [x] Dodać requesty dla Reviews Service:
+  - [x] Create Review
+  - [x] Get Product Reviews
+  - [x] Get Product Review Stats
+  - [x] Get User Reviews
+  - [x] Update Review
+  - [x] Delete Review
+- [x] Skonfigurować Environment variables (base URLs, token, userId, product_id, order_id, review_id)
+- [x] Wyeksportować kolekcję do `postman_collection.json`
+- [x] Wyeksportować environment do `postman_environment.json`
+- [x] Utworzyć POSTMAN_GUIDE.md z instrukcjami użycia
 
 ### [ ] 8.3 Integration Testing
 - [ ] Przetestować pełny flow użytkownika w Postman:

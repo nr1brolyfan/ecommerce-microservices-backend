@@ -1,0 +1,843 @@
+{
+  "info": {
+    "name": "E-commerce Microservices",
+    "description": "Complete API collection for e-commerce microservices backend\n\n**Services:**\n- Auth Service (Port 3000)\n- Products Service (Port 3001)\n- Cart Service (Port 3002)\n- Orders Service (Port 3003)\n- Reviews Service (Port 3004)\n\n**Default Credentials:**\n- Admin: admin@example.com / Password123!\n- Users: Check seeded data\n\n**Usage:**\n1. Start all services: `pnpm dev`\n2. Seed databases: `pnpm seed`\n3. Login to get token\n4. Use token in authenticated requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth Service",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"user_id\", jsonData.data.id);",
+                  "    pm.environment.set(\"user_email\", jsonData.data.email);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"TestPass123!\",\n  \"firstName\": \"Test\",\n  \"lastName\": \"User\"\n}"
+            },
+            "url": {
+              "raw": "{{auth_url}}/api/auth/register",
+              "host": ["{{auth_url}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Register a new user account"
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"token\", jsonData.data.token);",
+                  "    pm.environment.set(\"user_id\", jsonData.data.user.id);",
+                  "    console.log(\"Token saved:\", jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"TestPass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{auth_url}}/api/auth/login",
+              "host": ["{{auth_url}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login and get JWT token"
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"admin_token\", jsonData.data.token);",
+                  "    pm.environment.set(\"admin_id\", jsonData.data.user.id);",
+                  "    console.log(\"Admin token saved:\", jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{auth_url}}/api/auth/login",
+              "host": ["{{auth_url}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login as admin and get JWT token"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{auth_url}}/api/auth/me",
+              "host": ["{{auth_url}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "Get current authenticated user details"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{auth_url}}/api/users/{{user_id}}",
+              "host": ["{{auth_url}}"],
+              "path": ["api", "users", "{{user_id}}"]
+            },
+            "description": "Get user profile by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Name\"\n}"
+            },
+            "url": {
+              "raw": "{{auth_url}}/api/users/{{user_id}}",
+              "host": ["{{auth_url}}"],
+              "path": ["api", "users", "{{user_id}}"]
+            },
+            "description": "Update user profile (own profile or admin)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Authentication and user management endpoints"
+    },
+    {
+      "name": "Products Service",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{products_url}}/api/products",
+              "host": ["{{products_url}}"],
+              "path": ["api", "products"]
+            },
+            "description": "Get all products (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products with Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{products_url}}/api/products?inStock=true&minPrice=10&maxPrice=1000",
+              "host": ["{{products_url}}"],
+              "path": ["api", "products"],
+              "query": [
+                {
+                  "key": "inStock",
+                  "value": "true"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "10"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "1000"
+                },
+                {
+                  "key": "category",
+                  "value": "electronics",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get products with filters (inStock, minPrice, maxPrice, category)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"product_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{products_url}}/api/products/{{product_id}}",
+              "host": ["{{products_url}}"],
+              "path": ["api", "products", "{{product_id}}"]
+            },
+            "description": "Get single product by ID (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"product_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Gaming Laptop\",\n  \"categoryId\": \"{{category_id}}\",\n  \"description\": \"High performance gaming laptop with RTX graphics\",\n  \"price\": 2499.99,\n  \"sku\": \"LAPTOP-GAMING-001\",\n  \"stockQuantity\": 15,\n  \"imageUrl\": \"https://example.com/laptop.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{products_url}}/api/products",
+              "host": ["{{products_url}}"],
+              "path": ["api", "products"]
+            },
+            "description": "Create new product (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Gaming Laptop\",\n  \"price\": 2299.99,\n  \"stockQuantity\": 20\n}"
+            },
+            "url": {
+              "raw": "{{products_url}}/api/products/{{product_id}}",
+              "host": ["{{products_url}}"],
+              "path": ["api", "products", "{{product_id}}"]
+            },
+            "description": "Update product (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{products_url}}/api/products/{{product_id}}",
+              "host": ["{{products_url}}"],
+              "path": ["api", "products", "{{product_id}}"]
+            },
+            "description": "Delete product (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{products_url}}/api/categories",
+              "host": ["{{products_url}}"],
+              "path": ["api", "categories"]
+            },
+            "description": "Get all categories (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Category by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"category_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{products_url}}/api/categories/{{category_id}}",
+              "host": ["{{products_url}}"],
+              "path": ["api", "categories", "{{category_id}}"]
+            },
+            "description": "Get single category by ID (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Category (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"category_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gaming\",\n  \"slug\": \"gaming\",\n  \"description\": \"Gaming products and accessories\"\n}"
+            },
+            "url": {
+              "raw": "{{products_url}}/api/categories",
+              "host": ["{{products_url}}"],
+              "path": ["api", "categories"]
+            },
+            "description": "Create new category (admin only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Product catalog and category management endpoints"
+    },
+    {
+      "name": "Cart Service",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{cart_url}}/api/cart/{{user_id}}",
+              "host": ["{{cart_url}}"],
+              "path": ["api", "cart", "{{user_id}}"]
+            },
+            "description": "Get user's cart (own cart or admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{cart_url}}/api/cart/{{user_id}}/items",
+              "host": ["{{cart_url}}"],
+              "path": ["api", "cart", "{{user_id}}", "items"]
+            },
+            "description": "Add product to cart"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Cart Item Quantity",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 3\n}"
+            },
+            "url": {
+              "raw": "{{cart_url}}/api/cart/{{user_id}}/items/{{product_id}}",
+              "host": ["{{cart_url}}"],
+              "path": ["api", "cart", "{{user_id}}", "items", "{{product_id}}"]
+            },
+            "description": "Update item quantity in cart"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Item from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{cart_url}}/api/cart/{{user_id}}/items/{{product_id}}",
+              "host": ["{{cart_url}}"],
+              "path": ["api", "cart", "{{user_id}}", "items", "{{product_id}}"]
+            },
+            "description": "Remove item from cart"
+          },
+          "response": []
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{cart_url}}/api/cart/{{user_id}}",
+              "host": ["{{cart_url}}"],
+              "path": ["api", "cart", "{{user_id}}"]
+            },
+            "description": "Clear all items from cart"
+          },
+          "response": []
+        }
+      ],
+      "description": "Shopping cart management endpoints"
+    },
+    {
+      "name": "Orders Service",
+      "item": [
+        {
+          "name": "Create Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"order_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{user_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{orders_url}}/api/orders",
+              "host": ["{{orders_url}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Create order from cart items"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{orders_url}}/api/orders/{{order_id}}",
+              "host": ["{{orders_url}}"],
+              "path": ["api", "orders", "{{order_id}}"]
+            },
+            "description": "Get order details (own order or admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{orders_url}}/api/orders/user/{{user_id}}",
+              "host": ["{{orders_url}}"],
+              "path": ["api", "orders", "user", "{{user_id}}"]
+            },
+            "description": "Get all orders for a user (own orders or admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Order Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shipped\"\n}"
+            },
+            "url": {
+              "raw": "{{orders_url}}/api/orders/{{order_id}}/status",
+              "host": ["{{orders_url}}"],
+              "path": ["api", "orders", "{{order_id}}", "status"]
+            },
+            "description": "Update order status (admin only). Values: pending, processing, shipped, delivered, cancelled"
+          },
+          "response": []
+        }
+      ],
+      "description": "Order management endpoints"
+    },
+    {
+      "name": "Reviews Service",
+      "item": [
+        {
+          "name": "Create Review",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set(\"review_id\", jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"userId\": \"{{user_id}}\",\n  \"orderId\": \"{{order_id}}\",\n  \"rating\": 5,\n  \"title\": \"Excellent product!\",\n  \"comment\": \"This product exceeded my expectations. Highly recommend!\"\n}"
+            },
+            "url": {
+              "raw": "{{reviews_url}}/api/reviews",
+              "host": ["{{reviews_url}}"],
+              "path": ["api", "reviews"]
+            },
+            "description": "Create review (requires purchase verification)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{reviews_url}}/api/reviews/product/{{product_id}}",
+              "host": ["{{reviews_url}}"],
+              "path": ["api", "reviews", "product", "{{product_id}}"]
+            },
+            "description": "Get all reviews for a product (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Review Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{reviews_url}}/api/reviews/product/{{product_id}}/stats",
+              "host": ["{{reviews_url}}"],
+              "path": ["api", "reviews", "product", "{{product_id}}", "stats"]
+            },
+            "description": "Get review statistics for a product (public)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{reviews_url}}/api/reviews/user/{{user_id}}",
+              "host": ["{{reviews_url}}"],
+              "path": ["api", "reviews", "user", "{{user_id}}"]
+            },
+            "description": "Get all reviews by a user (own reviews or admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"title\": \"Very good product\",\n  \"comment\": \"Updated review: Still good but found some minor issues.\"\n}"
+            },
+            "url": {
+              "raw": "{{reviews_url}}/api/reviews/{{review_id}}",
+              "host": ["{{reviews_url}}"],
+              "path": ["api", "reviews", "{{review_id}}"]
+            },
+            "description": "Update review (own review or admin)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{reviews_url}}/api/reviews/{{review_id}}",
+              "host": ["{{reviews_url}}"],
+              "path": ["api", "reviews", "{{review_id}}"]
+            },
+            "description": "Delete review (own review or admin)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Product reviews and ratings endpoints"
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "products_url",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "cart_url",
+      "value": "http://localhost:3002",
+      "type": "string"
+    },
+    {
+      "key": "orders_url",
+      "value": "http://localhost:3003",
+      "type": "string"
+    },
+    {
+      "key": "reviews_url",
+      "value": "http://localhost:3004",
+      "type": "string"
+    }
+  ]
+}
