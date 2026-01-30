@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { decimal, integer, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { decimal, integer, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
 
 // Carts table
 export const carts = pgTable('carts', {

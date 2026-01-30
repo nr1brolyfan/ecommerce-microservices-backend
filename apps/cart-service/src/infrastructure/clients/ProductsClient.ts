@@ -1,11 +1,14 @@
 import { hc } from 'hono/client'
-import type { ProductsApp } from '../../../../products-service/src/app.js'
 import { config } from '../../config/env.js'
+
+// Note: In production, this type should be imported from a shared package
+// For now, we use any to avoid circular dependencies
+type ProductsApp = any
 
 export class ProductsClient {
   private client = hc<ProductsApp>(config.productsServiceUrl)
 
-  async getProduct(id: string) {
+  async getProduct(id: string): Promise<any> {
     try {
       const res = await this.client.api.products[':id'].$get({
         param: { id },

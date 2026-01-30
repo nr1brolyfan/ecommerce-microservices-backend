@@ -11,14 +11,14 @@
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ✅ (4/4)
 - **FAZA 3**: Auth Service ✅ (6/6)
-- **FAZA 4**: Products Service ⬜ (0/6)
-- **FAZA 5**: Cart Service ⬜ (0/5)
+- **FAZA 4**: Products Service ✅ (6/6)
+- **FAZA 5**: Cart Service ✅ (5/5)
 - **FAZA 6**: Orders Service ⬜ (0/6)
 - **FAZA 7**: Reviews Service ⬜ (0/6)
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 15/47 tasków (32%)
+**TOTAL PROGRESS**: 26/47 tasków (55%)
 
 ---
 
@@ -185,114 +185,114 @@
 
 ## FAZA 4: Products Service 🛍️
 
-### [ ] 4.1 Setup Products Service
-- [ ] Utworzyć strukturę folderów DDD w `apps/products-service/src/`
-- [ ] Utworzyć `package.json` z dependencies
-- [ ] Utworzyć `tsconfig.json`
-- [ ] Utworzyć `.env.example` (DATABASE_URL, AUTH_SERVICE_URL)
+### [x] 4.1 Setup Products Service
+- [x] Utworzyć strukturę folderów DDD w `apps/products-service/src/`
+- [x] Utworzyć `package.json` z dependencies
+- [x] Utworzyć `tsconfig.json`
+- [x] Utworzyć `.env.example` (DATABASE_URL, AUTH_SERVICE_URL)
 
-### [ ] 4.2 Database Schema & Migrations
-- [ ] Utworzyć `infrastructure/database/schema.ts` z tabelami:
-  - [ ] `categories` (id, name, slug, description, created_at)
-  - [ ] `products` (id, category_id, name, slug, description, price, sku, stock_quantity, image_url, timestamps)
-- [ ] Utworzyć connection i drizzle config
-- [ ] Wygenerować i uruchomić migracje
+### [x] 4.2 Database Schema & Migrations
+- [x] Utworzyć `infrastructure/database/schema.ts` z tabelami:
+  - [x] `categories` (id, name, slug, description, created_at)
+  - [x] `products` (id, category_id, name, slug, description, price, sku, stock_quantity, image_url, timestamps)
+- [x] Utworzyć connection i drizzle config
+- [x] Wygenerować i uruchomić migracje
 
-### [ ] 4.3 Domain Layer
-- [ ] Utworzyć entities:
-  - [ ] `domain/entities/Product.ts`
-  - [ ] `domain/entities/Category.ts`
-- [ ] Utworzyć value objects:
-  - [ ] `domain/value-objects/Price.ts` (validacja ceny)
-  - [ ] `domain/value-objects/SKU.ts` (validacja SKU)
-- [ ] Utworzyć interfaces:
-  - [ ] `domain/repositories/IProductRepository.ts`
-  - [ ] `domain/repositories/ICategoryRepository.ts`
-- [ ] Utworzyć `domain/errors/ProductErrors.ts`
+### [x] 4.3 Domain Layer
+- [x] Utworzyć entities:
+  - [x] `domain/entities/Product.ts`
+  - [x] `domain/entities/Category.ts`
+- [x] Utworzyć value objects:
+  - [x] `domain/value-objects/Price.ts` (validacja ceny)
+  - [x] `domain/value-objects/SKU.ts` (validacja SKU)
+- [x] Utworzyć interfaces:
+  - [x] `domain/repositories/IProductRepository.ts`
+  - [x] `domain/repositories/ICategoryRepository.ts`
+- [x] Utworzyć `domain/errors/ProductErrors.ts`
 
-### [ ] 4.4 Application Layer
-- [ ] Utworzyć use cases dla produktów:
-  - [ ] `CreateProduct.ts`
-  - [ ] `GetProducts.ts` (z filtrowaniem)
-  - [ ] `GetProductById.ts`
-  - [ ] `UpdateProduct.ts`
-  - [ ] `DeleteProduct.ts`
-- [ ] Utworzyć use cases dla kategorii:
-  - [ ] `CreateCategory.ts`
-  - [ ] `GetCategories.ts`
-- [ ] Utworzyć DTOs
+### [x] 4.4 Application Layer
+- [x] Utworzyć use cases dla produktów:
+  - [x] `CreateProduct.ts`
+  - [x] `GetProducts.ts` (z filtrowaniem)
+  - [x] `GetProductById.ts`
+  - [x] `UpdateProduct.ts`
+  - [x] `DeleteProduct.ts`
+- [x] Utworzyć use cases dla kategorii:
+  - [x] `CreateCategory.ts`
+  - [x] `GetCategories.ts`
+- [x] Utworzyć DTOs
 
-### [ ] 4.5 Infrastructure Layer
-- [ ] Zaimplementować `ProductRepository.ts`
-- [ ] Zaimplementować `CategoryRepository.ts`
-- [ ] Dodać filtrowanie (category, minPrice, maxPrice, inStock)
+### [x] 4.5 Infrastructure Layer
+- [x] Zaimplementować `ProductRepository.ts`
+- [x] Zaimplementować `CategoryRepository.ts`
+- [x] Dodać filtrowanie (category, minPrice, maxPrice, inStock)
 
-### [ ] 4.6 Presentation Layer (API)
-- [ ] Utworzyć Hono app
-- [ ] Utworzyć validators (Zod)
-- [ ] Utworzyć routes dla produktów:
-  - [ ] GET /api/products (public)
-  - [ ] GET /api/products/:id (public)
-  - [ ] POST /api/products (admin only)
-  - [ ] PUT /api/products/:id (admin only)
-  - [ ] DELETE /api/products/:id (admin only)
-- [ ] Utworzyć routes dla kategorii:
-  - [ ] GET /api/categories (public)
-  - [ ] GET /api/categories/:id (public)
-  - [ ] POST /api/categories (admin only)
-- [ ] Zintegrować auth middleware z @repo/shared-utils
-- [ ] Start serwera na porcie 3001
-- [ ] Wyeksportować `export type ProductsApp = typeof app`
-- [ ] Przetestować wszystkie endpointy w Postman
+### [x] 4.6 Presentation Layer (API)
+- [x] Utworzyć Hono app
+- [x] Utworzyć validators (Zod)
+- [x] Utworzyć routes dla produktów:
+  - [x] GET /api/products (public)
+  - [x] GET /api/products/:id (public)
+  - [x] POST /api/products (admin only)
+  - [x] PUT /api/products/:id (admin only)
+  - [x] DELETE /api/products/:id (admin only)
+- [x] Utworzyć routes dla kategorii:
+  - [x] GET /api/categories (public)
+  - [x] GET /api/categories/:id (public)
+  - [x] POST /api/categories (admin only)
+- [x] Zintegrować auth middleware z @repo/shared-utils
+- [x] Start serwera na porcie 3001
+- [x] Wyeksportować `export type ProductsApp = typeof app`
+- [x] Przetestować wszystkie endpointy w Postman
 
 ---
 
 ## FAZA 5: Cart Service 🛒
 
-### [ ] 5.1 Setup Cart Service
-- [ ] Utworzyć strukturę folderów DDD w `apps/cart-service/src/`
-- [ ] Utworzyć `package.json` z dependencies
-- [ ] Utworzyć `tsconfig.json`
-- [ ] Utworzyć `.env.example` (DATABASE_URL, PRODUCTS_SERVICE_URL, AUTH_SERVICE_URL)
+### [x] 5.1 Setup Cart Service
+- [x] Utworzyć strukturę folderów DDD w `apps/cart-service/src/`
+- [x] Utworzyć `package.json` z dependencies
+- [x] Utworzyć `tsconfig.json`
+- [x] Utworzyć `.env.example` (DATABASE_URL, PRODUCTS_SERVICE_URL, AUTH_SERVICE_URL)
 
-### [ ] 5.2 Database Schema & Migrations
-- [ ] Utworzyć `infrastructure/database/schema.ts` z tabelami:
-  - [ ] `carts` (id, user_id UNIQUE, created_at, updated_at)
-  - [ ] `cart_items` (id, cart_id FK, product_id, quantity, price_at_addition, added_at)
-- [ ] Wygenerować i uruchomić migracje
+### [x] 5.2 Database Schema & Migrations
+- [x] Utworzyć `infrastructure/database/schema.ts` z tabelami:
+  - [x] `carts` (id, user_id UNIQUE, created_at, updated_at)
+  - [x] `cart_items` (id, cart_id FK, product_id, quantity, price_at_addition, added_at)
+- [x] Wygenerować i uruchomić migracje
 
-### [ ] 5.3 Domain & Application Layers
-- [ ] Utworzyć `domain/entities/Cart.ts` i `CartItem.ts`
-- [ ] Utworzyć `domain/repositories/ICartRepository.ts`
-- [ ] Utworzyć use cases:
-  - [ ] `GetCart.ts`
-  - [ ] `AddItemToCart.ts`
-  - [ ] `UpdateCartItem.ts`
-  - [ ] `RemoveCartItem.ts`
-  - [ ] `ClearCart.ts`
+### [x] 5.3 Domain & Application Layers
+- [x] Utworzyć `domain/entities/Cart.ts` i `CartItem.ts`
+- [x] Utworzyć `domain/repositories/ICartRepository.ts`
+- [x] Utworzyć use cases:
+  - [x] `GetCart.ts`
+  - [x] `AddItemToCart.ts`
+  - [x] `UpdateCartItem.ts`
+  - [x] `RemoveCartItem.ts`
+  - [x] `ClearCart.ts`
 
-### [ ] 5.4 Infrastructure Layer (Hono RPC Integration)
-- [ ] Zaimplementować `CartRepository.ts`
-- [ ] Utworzyć `infrastructure/clients/ProductsClient.ts`:
-  - [ ] Zaimportować `type ProductsApp` z products-service
-  - [ ] Użyć `hc<ProductsApp>()` do utworzenia klienta
-  - [ ] Zaimplementować `getProduct(id)` - weryfikacja produktu
-  - [ ] Zaimplementować `checkStock(id, quantity)` - weryfikacja dostępności
-- [ ] Dodać error handling dla niedostępnego serwisu
+### [x] 5.4 Infrastructure Layer (Hono RPC Integration)
+- [x] Zaimplementować `CartRepository.ts`
+- [x] Utworzyć `infrastructure/clients/ProductsClient.ts`:
+  - [x] Zaimportować `type ProductsApp` z products-service
+  - [x] Użyć `hc<ProductsApp>()` do utworzenia klienta
+  - [x] Zaimplementować `getProduct(id)` - weryfikacja produktu
+  - [x] Zaimplementować `checkStock(id, quantity)` - weryfikacja dostępności
+- [x] Dodać error handling dla niedostępnego serwisu
 
-### [ ] 5.5 Presentation Layer (API)
-- [ ] Utworzyć Hono app
-- [ ] Utworzyć validators
-- [ ] Utworzyć routes:
-  - [ ] GET /api/cart/:userId (auth: own user or admin)
-  - [ ] POST /api/cart/:userId/items (auth: own user or admin)
-  - [ ] PUT /api/cart/:userId/items/:productId (auth: own user or admin)
-  - [ ] DELETE /api/cart/:userId/items/:productId (auth: own user or admin)
-  - [ ] DELETE /api/cart/:userId (auth: own user or admin)
-- [ ] Dodać middleware sprawdzający ownership (user może tylko swój koszyk)
-- [ ] Start serwera na porcie 3002
-- [ ] Wyeksportować `export type CartApp = typeof app`
-- [ ] Przetestować wszystkie endpointy w Postman (weryfikuj integrację z products-service)
+### [x] 5.5 Presentation Layer (API)
+- [x] Utworzyć Hono app
+- [x] Utworzyć validators
+- [x] Utworzyć routes:
+  - [x] GET /api/cart/:userId (auth: own user or admin)
+  - [x] POST /api/cart/:userId/items (auth: own user or admin)
+  - [x] PUT /api/cart/:userId/items/:productId (auth: own user or admin)
+  - [x] DELETE /api/cart/:userId/items/:productId (auth: own user or admin)
+  - [x] DELETE /api/cart/:userId (auth: own user or admin)
+- [x] Dodać middleware sprawdzający ownership (user może tylko swój koszyk)
+- [x] Start serwera na porcie 3002
+- [x] Wyeksportować `export type CartApp = typeof app`
+- [x] Przetestować wszystkie endpointy w Postman (weryfikuj integrację z products-service)
 
 ---
 
