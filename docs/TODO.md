@@ -10,7 +10,7 @@
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ✅ (4/4)
-- **FAZA 3**: Auth Service 🔄 (1/6)
+- **FAZA 3**: Auth Service 🔄 (2/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
 - **FAZA 6**: Orders Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 10/47 tasków (21%)
+**TOTAL PROGRESS**: 11/47 tasków (23%)
 
 ---
 
@@ -135,13 +135,13 @@
 - [x] Utworzyć `tsconfig.json` (extends shared-config)
 - [x] Utworzyć `.env.example` dla auth-service
 
-### [ ] 3.2 Database Schema & Migrations
-- [ ] Utworzyć `infrastructure/database/schema.ts` z tabelą `users`:
-  - [ ] id, email, password_hash, first_name, last_name, role, timestamps
-- [ ] Utworzyć `infrastructure/database/connection.ts` (Drizzle connection)
-- [ ] Utworzyć `drizzle.config.ts`
-- [ ] Wygenerować migracje (`drizzle-kit generate`)
-- [ ] Uruchomić migracje (`drizzle-kit push`)
+### [x] 3.2 Database Schema & Migrations
+- [x] Utworzyć `infrastructure/database/schema.ts` z tabelą `users`:
+  - [x] id, email, password_hash, first_name, last_name, role, timestamps
+- [x] Utworzyć `infrastructure/database/connection.ts` (Drizzle connection)
+- [x] Utworzyć `drizzle.config.ts`
+- [x] Wygenerować migracje (`drizzle-kit generate`)
+- [x] Uruchomić migracje (`drizzle-kit push`)
 
 ### [ ] 3.3 Domain Layer
 - [ ] Utworzyć `domain/entities/User.ts` entity
