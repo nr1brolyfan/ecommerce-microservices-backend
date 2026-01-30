@@ -30,12 +30,12 @@ export class CartClient implements ICartServiceClient {
         throw new Error(`Failed to get cart: ${res.statusText}`)
       }
 
-      const data = await res.json()
+      const data = (await res.json()) as { success: boolean; data: Cart }
       if (!data.success) {
         throw new Error('Failed to get cart')
       }
 
-      return data.data as Cart
+      return data.data
     } catch (error) {
       console.error('Error fetching cart:', error)
       throw new Error('Cart service unavailable')

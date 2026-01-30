@@ -3,6 +3,8 @@ import type { OrderStatus } from '../../infrastructure/database/schema.js'
 import type { OrderItem } from './OrderItem.js'
 
 export class Order extends BaseEntity {
+  public updatedAt: Date
+
   constructor(
     id: string,
     public userId: string,
@@ -10,9 +12,10 @@ export class Order extends BaseEntity {
     public totalAmount: number,
     public items: OrderItem[],
     createdAt: Date,
-    public updatedAt: Date,
+    updatedAt: Date,
   ) {
     super(id, createdAt, updatedAt)
+    this.updatedAt = updatedAt
   }
 
   // Domain methods

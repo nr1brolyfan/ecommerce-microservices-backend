@@ -22,12 +22,12 @@ export class ProductsClient implements IProductServiceClient {
         throw new Error(`Failed to get product: ${res.statusText}`)
       }
 
-      const data = await res.json()
+      const data = (await res.json()) as { success: boolean; data: Product }
       if (!data.success) {
         throw new Error('Failed to get product')
       }
 
-      return data.data as Product
+      return data.data
     } catch (error) {
       console.error('Error fetching product:', error)
       throw new Error('Products service unavailable')

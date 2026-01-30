@@ -23,6 +23,10 @@ export class OrderRepository implements IOrderRepository {
         })
         .returning()
 
+      if (!insertedOrder) {
+        throw new Error('Failed to create order')
+      }
+
       // Insert order items
       if (order.items.length > 0) {
         await tx.insert(orderItems).values(
@@ -40,6 +44,10 @@ export class OrderRepository implements IOrderRepository {
 
       return insertedOrder
     })
+
+    if (!result) {
+      throw new Error('Failed to create order')
+    }
 
     return this.findById(result.id) as Promise<Order>
   }
