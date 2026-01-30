@@ -13,12 +13,12 @@
 - **FAZA 3**: Auth Service ✅ (6/6)
 - **FAZA 4**: Products Service ✅ (6/6)
 - **FAZA 5**: Cart Service ✅ (5/5)
-- **FAZA 6**: Orders Service ⬜ (0/6)
+- **FAZA 6**: Orders Service ✅ (6/6)
 - **FAZA 7**: Reviews Service ⬜ (0/6)
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 26/47 tasków (55%)
+**TOTAL PROGRESS**: 32/47 tasków (68%)
 
 ---
 
@@ -298,66 +298,67 @@
 
 ## FAZA 6: Orders Service 📦
 
-### [ ] 6.1 Setup Orders Service
-- [ ] Utworzyć strukturę folderów DDD w `apps/orders-service/src/`
-- [ ] Utworzyć `package.json` z dependencies
-- [ ] Utworzyć `tsconfig.json`
-- [ ] Utworzyć `.env.example` (DATABASE_URL, CART_SERVICE_URL, PRODUCTS_SERVICE_URL)
+### [x] 6.1 Setup Orders Service
+- [x] Utworzyć strukturę folderów DDD w `apps/orders-service/src/`
+- [x] Utworzyć `package.json` z dependencies
+- [x] Utworzyć `tsconfig.json`
+- [x] Utworzyć `.env.example` (DATABASE_URL, CART_SERVICE_URL, PRODUCTS_SERVICE_URL)
 
-### [ ] 6.2 Database Schema & Migrations
-- [ ] Utworzyć `infrastructure/database/schema.ts` z tabelami:
-  - [ ] `orders` (id, user_id, status ENUM, total_amount, created_at, updated_at)
-  - [ ] `order_items` (id, order_id FK, product_id snapshot, product_name snapshot, quantity, price_at_order, subtotal)
-- [ ] Utworzyć ENUM dla statusu: pending, processing, shipped, delivered, cancelled
-- [ ] Wygenerować i uruchomić migracje
+### [x] 6.2 Database Schema & Migrations
+- [x] Utworzyć `infrastructure/database/schema.ts` z tabelami:
+  - [x] `orders` (id, user_id, status ENUM, total_amount, created_at, updated_at)
+  - [x] `order_items` (id, order_id FK, product_id snapshot, product_name snapshot, quantity, price_at_order, subtotal)
+- [x] Utworzyć ENUM dla statusu: pending, processing, shipped, delivered, cancelled
+- [x] Wygenerować i uruchomić migracje
 
-### [ ] 6.3 Domain & Application Layers
-- [ ] Utworzyć entities:
-  - [ ] `domain/entities/Order.ts`
-  - [ ] `domain/entities/OrderItem.ts`
-- [ ] Utworzyć value objects:
-  - [ ] `domain/value-objects/OrderStatus.ts`
-- [ ] Utworzyć `domain/repositories/IOrderRepository.ts`
-- [ ] Utworzyć use cases:
-  - [ ] `CreateOrder.ts` (proces: get cart → verify products → create order → clear cart)
-  - [ ] `GetOrderById.ts`
-  - [ ] `GetOrdersByUserId.ts`
-  - [ ] `UpdateOrderStatus.ts` (admin only)
+### [x] 6.3 Domain & Application Layers
+- [x] Utworzyć entities:
+  - [x] `domain/entities/Order.ts`
+  - [x] `domain/entities/OrderItem.ts`
+- [x] Utworzyć value objects:
+  - [x] `domain/value-objects/OrderStatus.ts`
+- [x] Utworzyć `domain/repositories/IOrderRepository.ts`
+- [x] Utworzyć use cases:
+  - [x] `CreateOrder.ts` (proces: get cart → verify products → create order → clear cart)
+  - [x] `GetOrderById.ts`
+  - [x] `GetOrdersByUserId.ts`
+  - [x] `UpdateOrderStatus.ts` (admin only)
 
-### [ ] 6.4 Infrastructure Layer (Multiple RPC Clients)
-- [ ] Zaimplementować `OrderRepository.ts`
-- [ ] Utworzyć `infrastructure/clients/CartClient.ts`:
-  - [ ] Zaimportować `type CartApp`
-  - [ ] `getCart(userId)` - pobierz koszyk
-  - [ ] `clearCart(userId)` - wyczyść po zamówieniu
-- [ ] Utworzyć `infrastructure/clients/ProductsClient.ts`:
-  - [ ] Zaimportować `type ProductsApp`
-  - [ ] `getProduct(id)` - weryfikacja produktu
-  - [ ] `checkStock(id, quantity)` - weryfikacja dostępności
-  - [ ] `updateStock(id, quantity)` - aktualizacja stanu (admin endpoint)
+### [x] 6.4 Infrastructure Layer (Multiple RPC Clients)
+- [x] Zaimplementować `OrderRepository.ts`
+- [x] Utworzyć `infrastructure/clients/CartClient.ts`:
+  - [x] Zaimportować `type CartApp`
+  - [x] `getCart(userId)` - pobierz koszyk
+  - [x] `clearCart(userId)` - wyczyść po zamówieniu
+- [x] Utworzyć `infrastructure/clients/ProductsClient.ts`:
+  - [x] Zaimportować `type ProductsApp`
+  - [x] `getProduct(id)` - weryfikacja produktu
+  - [x] `checkStock(id, quantity)` - weryfikacja dostępności
+  - [x] `updateStock(id, quantity)` - aktualizacja stanu (admin endpoint)
 
-### [ ] 6.5 Presentation Layer (API)
-- [ ] Utworzyć Hono app
-- [ ] Utworzyć validators
-- [ ] Utworzyć routes:
-  - [ ] POST /api/orders (auth: user/admin) - stwórz zamówienie
-  - [ ] GET /api/orders/:id (auth: own user or admin)
-  - [ ] GET /api/orders/user/:userId (auth: own user or admin)
-  - [ ] PUT /api/orders/:id/status (admin only)
-- [ ] Zaimplementować proces składania zamówienia:
-  - [ ] Walidacja użytkownika
-  - [ ] Pobranie koszyka z cart-service
-  - [ ] Weryfikacja produktów w products-service
-  - [ ] Utworzenie zamówienia (snapshot cen i nazw)
-  - [ ] Wyczyszczenie koszyka w cart-service
-- [ ] Start serwera na porcie 3003
-- [ ] Wyeksportować `export type OrdersApp = typeof app`
+### [x] 6.5 Presentation Layer (API)
+- [x] Utworzyć Hono app
+- [x] Utworzyć validators
+- [x] Utworzyć routes:
+  - [x] POST /api/orders (auth: user/admin) - stwórz zamówienie
+  - [x] GET /api/orders/:id (auth: own user or admin)
+  - [x] GET /api/orders/user/:userId (auth: own user or admin)
+  - [x] PUT /api/orders/:id/status (admin only)
+- [x] Zaimplementować proces składania zamówienia:
+  - [x] Walidacja użytkownika
+  - [x] Pobranie koszyka z cart-service
+  - [x] Weryfikacja produktów w products-service
+  - [x] Utworzenie zamówienia (snapshot cen i nazw)
+  - [x] Wyczyszczenie koszyka w cart-service
+- [x] Start serwera na porcie 3003
+- [x] Wyeksportować `export type OrdersApp = typeof app`
 - [ ] Przetestować pełny flow w Postman
 
-### [ ] 6.6 Error Handling & Rollback
-- [ ] Dodać try-catch w CreateOrder use case
-- [ ] Jeśli zamówienie się nie powiedzie, nie czyść koszyka
-- [ ] Jeśli brak produktu w magazynie, zwróć błąd przed utworzeniem zamówienia
+### [x] 6.6 Error Handling & Rollback
+- [x] Dodać try-catch w CreateOrder use case
+- [x] Jeśli zamówienie się nie powiedzie, nie czyść koszyka
+- [x] Jeśli brak produktu w magazynie, zwróć błąd przed utworzeniem zamówienia
+- [x] Dodać rollback logic dla stock updates i order creation
 - [ ] Przetestować edge cases (puste koszyki, brak stocku)
 
 ---
