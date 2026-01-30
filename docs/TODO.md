@@ -8,7 +8,7 @@
 
 ## 📋 Progress Overview
 
-- **FAZA 1**: Setup & Infrastructure ⏳ (3/5)
+- **FAZA 1**: Setup & Infrastructure ⏳ (4/5)
 - **FAZA 2**: Shared Packages ⬜ (0/4)
 - **FAZA 3**: Auth Service ⬜ (0/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 3/47 tasków (6%)
+**TOTAL PROGRESS**: 4/47 tasków (9%)
 
 ---
 
@@ -49,14 +49,14 @@
 - [x] Uruchomić PostgreSQL (`docker-compose up -d`)
 - [x] Zweryfikować połączenie z bazą (`psql` lub pgAdmin)
 
-### [ ] 1.4 Root Package Configuration
-- [ ] Utworzyć root `package.json` z workspace scripts:
-  - [ ] `"dev"` - uruchom wszystkie serwisy
-  - [ ] `"build"` - build wszystkich serwisów
-  - [ ] `"test"` - testy wszystkich serwisów
-  - [ ] `"db:migrate"` - migracje wszystkich baz
-- [ ] Dodać dev dependencies (typescript, tsx, vitest)
-- [ ] Utworzyć `.env.example` template
+### [x] 1.4 Root Package Configuration
+- [x] Utworzyć root `package.json` z workspace scripts:
+  - [x] `"dev"` - uruchom wszystkie serwisy
+  - [x] `"build"` - build wszystkich serwisów
+  - [x] `"test"` - testy wszystkich serwisów
+  - [x] `"db:migrate"` - migracje wszystkich baz
+- [x] Dodać dev dependencies (typescript, tsx, vitest)
+- [x] Utworzyć `.env.example` template
 
 ### [ ] 1.5 Environment Variables
 - [ ] Utworzyć główny `.env` z:
