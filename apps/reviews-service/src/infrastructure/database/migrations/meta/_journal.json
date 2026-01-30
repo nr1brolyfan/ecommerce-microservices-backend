@@ -1,0 +1,13 @@
+{
+  "version": "6",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1769801076653,
+      "tag": "0000_black_cable",
+      "breakpoints": true
+    }
+  ]
+}
