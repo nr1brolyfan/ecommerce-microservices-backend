@@ -10,6 +10,22 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./domain/entities": {
+      "types": "./dist/domain/entities/index.d.ts",
+      "default": "./dist/domain/entities/index.js"
+    },
+    "./domain/value-objects": {
+      "types": "./dist/domain/value-objects/index.d.ts",
+      "default": "./dist/domain/value-objects/index.js"
+    },
+    "./errors": {
+      "types": "./dist/errors/index.d.ts",
+      "default": "./dist/errors/index.js"
+    },
+    "./dtos/*": {
+      "types": "./dist/dtos/*.d.ts",
+      "default": "./dist/dtos/*.js"
     }
   },
   "scripts": {

@@ -10,6 +10,22 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth/middleware.d.ts",
+      "default": "./dist/auth/middleware.js"
+    },
+    "./jwt": {
+      "types": "./dist/jwt/index.d.ts",
+      "default": "./dist/jwt/index.js"
+    },
+    "./logger": {
+      "types": "./dist/logger/index.d.ts",
+      "default": "./dist/logger/index.js"
+    },
+    "./response": {
+      "types": "./dist/response/index.d.ts",
+      "default": "./dist/response/index.js"
     }
   },
   "scripts": {
