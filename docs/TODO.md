@@ -10,7 +10,7 @@
 
 - **FAZA 1**: Setup & Infrastructure ✅ (5/5)
 - **FAZA 2**: Shared Packages ✅ (4/4)
-- **FAZA 3**: Auth Service ⬜ (0/6)
+- **FAZA 3**: Auth Service 🔄 (1/6)
 - **FAZA 4**: Products Service ⬜ (0/6)
 - **FAZA 5**: Cart Service ⬜ (0/5)
 - **FAZA 6**: Orders Service ⬜ (0/6)
@@ -18,7 +18,7 @@
 - **FAZA 8**: Testing & Documentation ⬜ (0/5)
 - **FAZA 9**: Final Polish ⬜ (0/4)
 
-**TOTAL PROGRESS**: 9/47 tasków (19%)
+**TOTAL PROGRESS**: 10/47 tasków (21%)
 
 ---
 
@@ -124,16 +124,16 @@
 
 ## FAZA 3: Auth Service 🔐
 
-### [ ] 3.1 Setup Auth Service
-- [ ] Utworzyć strukturę folderów DDD w `apps/auth-service/src/`:
-  - [ ] `domain/` (entities, value-objects, repositories, errors)
-  - [ ] `application/` (use-cases, dtos)
-  - [ ] `infrastructure/` (database, repositories)
-  - [ ] `presentation/` (routes, middlewares, validators)
-  - [ ] `config/`
-- [ ] Utworzyć `package.json` z dependencies (hono, drizzle-orm, postgres, zod)
-- [ ] Utworzyć `tsconfig.json` (extends shared-config)
-- [ ] Utworzyć `.env.example` dla auth-service
+### [x] 3.1 Setup Auth Service
+- [x] Utworzyć strukturę folderów DDD w `apps/auth-service/src/`:
+  - [x] `domain/` (entities, value-objects, repositories, errors)
+  - [x] `application/` (use-cases, dtos)
+  - [x] `infrastructure/` (database, repositories)
+  - [x] `presentation/` (routes, middlewares, validators)
+  - [x] `config/`
+- [x] Utworzyć `package.json` z dependencies (hono, drizzle-orm, postgres, zod)
+- [x] Utworzyć `tsconfig.json` (extends shared-config)
+- [x] Utworzyć `.env.example` dla auth-service
 
 ### [ ] 3.2 Database Schema & Migrations
 - [ ] Utworzyć `infrastructure/database/schema.ts` z tabelą `users`:
