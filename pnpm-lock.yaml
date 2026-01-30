@@ -122,6 +122,52 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  apps/orders-service:
+    dependencies:
+      '@hono/node-server':
+        specifier: ^1.13.7
+        version: 1.19.9(hono@4.11.7)
+      '@hono/zod-validator':
+        specifier: ^0.4.1
+        version: 0.4.3(hono@4.11.7)(zod@3.25.76)
+      '@repo/shared-config':
+        specifier: workspace:*
+        version: link:../../packages/shared-config
+      '@repo/shared-types':
+        specifier: workspace:*
+        version: link:../../packages/shared-types
+      '@repo/shared-utils':
+        specifier: workspace:*
+        version: link:../../packages/shared-utils
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.6.1
+      drizzle-orm:
+        specifier: ^0.30.10
+        version: 0.30.10(postgres@3.4.8)
+      hono:
+        specifier: ^4.6.14
+        version: 4.11.7
+      postgres:
+        specifier: ^3.4.5
+        version: 3.4.8
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.2
+        version: 22.19.7
+      drizzle-kit:
+        specifier: ^0.21.4
+        version: 0.21.4
+      tsx:
+        specifier: ^4.19.2
+        version: 4.21.0
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   apps/products-service:
     dependencies:
       '@hono/node-server':
@@ -2371,7 +2417,7 @@ snapshots:
 
   '@types/bcrypt@5.0.2':
     dependencies:
-      '@types/node': 20.19.30
+      '@types/node': 22.19.7
 
   '@types/estree@1.0.8': {}
 
