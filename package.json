@@ -31,7 +31,9 @@
     "seed:auth": "pnpm --filter scripts seed:auth",
     "seed:products": "pnpm --filter scripts seed:products",
     "seed:orders": "pnpm --filter scripts seed:orders",
-    "seed:reviews": "pnpm --filter scripts seed:reviews"
+    "seed:reviews": "pnpm --filter scripts seed:reviews",
+    "test:smoke": "./scripts/smoke-test.sh",
+    "test:reset": "./scripts/reset-and-seed.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.13",
