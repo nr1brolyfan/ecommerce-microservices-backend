@@ -81,6 +81,10 @@ export async function seedReviews() {
     const reviewsDb = createConnection(getDatabaseUrl('reviews'))
     const ordersDb = createConnection(getDatabaseUrl('orders'))
 
+    // Clear existing data
+    console.log('   🧹 Clearing existing reviews...')
+    await reviewsDb.execute('TRUNCATE TABLE reviews CASCADE')
+
     // Fetch orders with items (only delivered/shipped orders)
     const ordersResult = await ordersDb.execute<{
       order_id: string
@@ -139,7 +143,7 @@ export async function seedReviews() {
         createdCount++
       } catch (error: any) {
         // Skip if unique constraint fails (user already reviewed this product)
-        if (error.message?.includes('unique_user_product_idx')) {
+        if (error.code === '23505' || error.message?.includes('unique_user_product')) {
           continue
         }
         throw error

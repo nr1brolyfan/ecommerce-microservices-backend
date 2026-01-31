@@ -71,6 +71,10 @@ export async function seedProducts() {
     const databaseUrl = getDatabaseUrl('products')
     const db = createConnection(databaseUrl)
 
+    // Clear existing data
+    console.log('   🧹 Clearing existing products and categories...')
+    await db.execute('TRUNCATE TABLE products, categories CASCADE')
+
     // Insert categories first (needed for foreign keys)
     const insertedCategories = await db.insert(categories).values(categoryData).returning()
     console.log(`   ✓ Created ${insertedCategories.length} categories`)

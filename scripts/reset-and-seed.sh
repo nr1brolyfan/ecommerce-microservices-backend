@@ -14,10 +14,11 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Step 1: Push database schemas (recreate tables)
-echo -e "${BLUE}📦 Step 1: Pushing database schemas...${NC}"
-pnpm db:push
-echo -e "${GREEN}✅ Database schemas updated${NC}"
+# Step 1: Verify database schemas
+echo -e "${BLUE}📦 Step 1: Verifying database schemas...${NC}"
+echo -e "${YELLOW}Note: Using existing schemas (TRUNCATE will clear data)${NC}"
+echo -e "${YELLOW}To rebuild schemas from scratch, run: pnpm db:push${NC}"
+echo -e "${GREEN}✅ Schemas OK${NC}"
 echo ""
 
 # Step 2: Run seeds

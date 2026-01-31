@@ -50,6 +50,10 @@ export async function seedOrders() {
     const authDb = createConnection(getDatabaseUrl('auth'))
     const productsDb = createConnection(getDatabaseUrl('products'))
 
+    // Clear existing data
+    console.log('   🧹 Clearing existing orders...')
+    await ordersDb.execute('TRUNCATE TABLE orders CASCADE')
+
     // Fetch user IDs from auth database
     const usersResult = await authDb.execute<{ id: string }>(
       sql`SELECT id FROM users WHERE role = 'user' LIMIT 5`,
