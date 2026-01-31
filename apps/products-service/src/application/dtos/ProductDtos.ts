@@ -1,7 +1,7 @@
 export interface CreateProductDto {
   categoryId: string
   name: string
-  slug: string
+  slug?: string | undefined
   description?: string | undefined
   price: number
   sku: string
@@ -45,7 +45,7 @@ export interface CategoryResponseDto {
 
 export interface CreateCategoryDto {
   name: string
-  slug: string
+  slug?: string | undefined
   description?: string | undefined
 }
 

@@ -21,14 +21,14 @@ export const requireOwnership: MiddlewareHandler = async (c, next) => {
 
   // Allow if user is admin or owns the resource
   if (user.role === 'admin' || user.sub === userId) {
-    await next()
-  } else {
-    return c.json(
-      {
-        success: false,
-        error: 'Forbidden: You can only access your own cart',
-      },
-      403,
-    )
+    return await next()
   }
+
+  return c.json(
+    {
+      success: false,
+      error: 'Forbidden: You can only access your own cart',
+    },
+    403,
+  )
 }

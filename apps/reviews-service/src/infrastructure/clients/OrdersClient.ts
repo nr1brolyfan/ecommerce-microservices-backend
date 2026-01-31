@@ -25,7 +25,8 @@ export class OrdersClient implements IOrderServiceClient {
 
   async getOrder(orderId: string): Promise<Order | null> {
     try {
-      const res = await fetch(`${this.baseUrl}/api/orders/${orderId}`, {
+      // Use internal endpoint for service-to-service communication (no auth required)
+      const res = await fetch(`${this.baseUrl}/internal/orders/${orderId}`, {
         headers: {
           'Content-Type': 'application/json',
         },

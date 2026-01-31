@@ -46,7 +46,7 @@ export class UpdateProduct {
     }
 
     // Update product
-    const updatedProduct = await this.productRepository.update(id, dto as any)
+    const updatedProduct = await this.productRepository.update(id, dto)
 
     return updatedProduct.toJSON()
   }

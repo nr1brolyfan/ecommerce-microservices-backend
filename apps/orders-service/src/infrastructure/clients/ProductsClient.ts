@@ -11,9 +11,14 @@ interface Product {
 export class ProductsClient implements IProductServiceClient {
   private baseUrl = config.productsServiceUrl
 
-  async getProduct(productId: string): Promise<Product | null> {
+  async getProduct(productId: string, authToken?: string): Promise<Product | null> {
     try {
-      const res = await fetch(`${this.baseUrl}/api/products/${productId}`)
+      const headers: Record<string, string> = {}
+      if (authToken) {
+        headers.Authorization = `Bearer ${authToken}`
+      }
+
+      const res = await fetch(`${this.baseUrl}/api/products/${productId}`, { headers })
 
       if (!res.ok) {
         if (res.status === 404) {
@@ -36,27 +41,22 @@ export class ProductsClient implements IProductServiceClient {
 
   async updateStock(productId: string, quantityChange: number): Promise<void> {
     try {
-      // Get current product to calculate new stock
-      const product = await this.getProduct(productId)
-      if (!product) {
-        throw new Error(`Product ${productId} not found`)
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
       }
 
-      const newStock = product.stockQuantity + quantityChange
-
-      // Update product with new stock quantity
-      const res = await fetch(`${this.baseUrl}/api/products/${productId}`, {
+      // Use internal endpoint for stock updates (no auth required for service-to-service)
+      const res = await fetch(`${this.baseUrl}/internal/products/${productId}/stock`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
-          stockQuantity: newStock,
+          quantityChange,
         }),
       })
 
       if (!res.ok) {
-        throw new Error(`Failed to update stock: ${res.statusText}`)
+        const errorData = (await res.json().catch(() => ({}))) as any
+        throw new Error(errorData.error?.message || `Failed to update stock: ${res.statusText}`)
       }
     } catch (error) {
       console.error('Error updating stock:', error)

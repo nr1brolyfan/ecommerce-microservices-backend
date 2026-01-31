@@ -1,4 +1,3 @@
-import type { CartApp } from '@repo/cart-service/src/app.js'
 import type { ICartServiceClient } from '../../application/use-cases/CreateOrder.js'
 import { config } from '../../config/env.js'
 
@@ -19,9 +18,14 @@ interface Cart {
 export class CartClient implements ICartServiceClient {
   private baseUrl = config.cartServiceUrl
 
-  async getCart(userId: string): Promise<Cart | null> {
+  async getCart(userId: string, authToken?: string): Promise<Cart | null> {
     try {
-      const res = await fetch(`${this.baseUrl}/api/cart/${userId}`)
+      const headers: Record<string, string> = {}
+      if (authToken) {
+        headers.Authorization = `Bearer ${authToken}`
+      }
+
+      const res = await fetch(`${this.baseUrl}/api/cart/${userId}`, { headers })
 
       if (!res.ok) {
         if (res.status === 404) {
@@ -42,10 +46,16 @@ export class CartClient implements ICartServiceClient {
     }
   }
 
-  async clearCart(userId: string): Promise<void> {
+  async clearCart(userId: string, authToken?: string): Promise<void> {
     try {
+      const headers: Record<string, string> = {}
+      if (authToken) {
+        headers.Authorization = `Bearer ${authToken}`
+      }
+
       const res = await fetch(`${this.baseUrl}/api/cart/${userId}`, {
         method: 'DELETE',
+        headers,
       })
 
       if (!res.ok) {

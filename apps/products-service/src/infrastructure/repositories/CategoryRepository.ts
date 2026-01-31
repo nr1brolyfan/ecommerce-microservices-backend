@@ -1,6 +1,9 @@
 import { eq } from 'drizzle-orm'
 import { Category } from '../../domain/entities/Category.js'
-import type { ICategoryRepository } from '../../domain/repositories/ICategoryRepository.js'
+import type {
+  CategoryUpdateData,
+  ICategoryRepository,
+} from '../../domain/repositories/ICategoryRepository.js'
 import { db } from '../database/connection.js'
 import { categories } from '../database/schema.js'
 
@@ -79,12 +82,12 @@ export class CategoryRepository implements ICategoryRepository {
     })
   }
 
-  async update(id: string, categoryData: Partial<Category>): Promise<Category> {
+  async update(id: string, data: CategoryUpdateData): Promise<Category> {
     const updateData: any = {}
 
-    if (categoryData.name) updateData.name = categoryData.name
-    if (categoryData.slug) updateData.slug = categoryData.slug
-    if (categoryData.description !== undefined) updateData.description = categoryData.description
+    if (data.name) updateData.name = data.name
+    if (data.slug) updateData.slug = data.slug
+    if (data.description !== undefined) updateData.description = data.description
 
     const result = await db
       .update(categories)

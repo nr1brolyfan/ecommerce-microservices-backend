@@ -52,7 +52,11 @@ app.post('/', authMiddleware(JWT_SECRET), zValidator('json', createOrderSchema),
       return c.json(errorResponse('Forbidden: You can only create your own orders'), 403)
     }
 
-    const order = await createOrderUseCase.execute(body)
+    // Extract JWT token from Authorization header
+    const authHeader = c.req.header('Authorization')
+    const token = authHeader?.replace('Bearer ', '')
+
+    const order = await createOrderUseCase.execute(body, token)
     return c.json(successResponse(order), 201)
   } catch (error: any) {
     console.error('Error creating order:', error)

@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { decimal, integer, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { decimal, integer, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 
 // Carts table
 export const carts = pgTable('carts', {
@@ -16,6 +16,7 @@ export const cartItems = pgTable('cart_items', {
     .notNull()
     .references(() => carts.id, { onDelete: 'cascade' }),
   productId: uuid('product_id').notNull(),
+  productName: varchar('product_name', { length: 255 }).notNull(),
   quantity: integer('quantity').notNull().default(1),
   priceAtAddition: decimal('price_at_addition', { precision: 10, scale: 2 }).notNull(),
   addedAt: timestamp('added_at').notNull().defaultNow(),

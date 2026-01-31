@@ -51,6 +51,7 @@ export class AddItemToCart {
       id: crypto.randomUUID(),
       cartId: cart.id,
       productId: dto.productId,
+      productName: product.name,
       quantity: dto.quantity,
       priceAtAddition: parseFloat(product.price),
       addedAt: new Date(),

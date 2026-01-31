@@ -3,6 +3,7 @@ import { Product } from '../../domain/entities/Product.js'
 import type {
   IProductRepository,
   ProductFilters,
+  ProductUpdateData,
 } from '../../domain/repositories/IProductRepository.js'
 import { db } from '../database/connection.js'
 import { products } from '../database/schema.js'
@@ -159,20 +160,19 @@ export class ProductRepository implements IProductRepository {
     })
   }
 
-  async update(id: string, productData: Partial<Product>): Promise<Product> {
+  async update(id: string, data: ProductUpdateData): Promise<Product> {
     const updateData: any = {
       updatedAt: new Date(),
     }
 
-    if (productData.categoryId) updateData.categoryId = productData.categoryId
-    if (productData.name) updateData.name = productData.name
-    if (productData.slug) updateData.slug = productData.slug
-    if (productData.description !== undefined) updateData.description = productData.description
-    if (productData.price) updateData.price = productData.price.getValue().toString()
-    if (productData.sku) updateData.sku = productData.sku.getValue()
-    if (productData.stockQuantity !== undefined)
-      updateData.stockQuantity = productData.stockQuantity
-    if (productData.imageUrl !== undefined) updateData.imageUrl = productData.imageUrl
+    if (data.categoryId) updateData.categoryId = data.categoryId
+    if (data.name) updateData.name = data.name
+    if (data.slug) updateData.slug = data.slug
+    if (data.description !== undefined) updateData.description = data.description
+    if (data.price !== undefined) updateData.price = data.price.toString()
+    if (data.sku) updateData.sku = data.sku
+    if (data.stockQuantity !== undefined) updateData.stockQuantity = data.stockQuantity
+    if (data.imageUrl !== undefined) updateData.imageUrl = data.imageUrl
 
     const result = await db.update(products).set(updateData).where(eq(products.id, id)).returning()
 

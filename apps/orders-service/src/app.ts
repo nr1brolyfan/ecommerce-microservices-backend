@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
+import internalRoutes from './presentation/routes/internal.routes.js'
 import ordersRoutes from './presentation/routes/orders.routes.js'
 
 const app = new Hono()
@@ -20,6 +21,9 @@ app.get('/health', (c) => {
 
 // Routes
 app.route('/api/orders', ordersRoutes)
+
+// Internal routes (for service-to-service communication)
+app.route('/internal/orders', internalRoutes)
 
 // 404 handler
 app.notFound((c) => {

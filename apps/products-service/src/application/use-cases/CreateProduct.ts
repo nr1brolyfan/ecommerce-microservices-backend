@@ -7,6 +7,7 @@ import {
 import type { ICategoryRepository } from '../../domain/repositories/ICategoryRepository.js'
 import type { IProductRepository } from '../../domain/repositories/IProductRepository.js'
 import type { CreateProductDto, ProductResponseDto } from '../dtos/ProductDtos.js'
+import { slugify } from '../utils/slugify.js'
 
 export class CreateProduct {
   constructor(
@@ -27,10 +28,13 @@ export class CreateProduct {
       throw new DuplicateSkuError(dto.sku)
     }
 
+    // Generate slug from name if not provided
+    const slug = dto.slug || slugify(dto.name)
+
     // Check for duplicate slug
-    const slugExists = await this.productRepository.existsBySlug(dto.slug)
+    const slugExists = await this.productRepository.existsBySlug(slug)
     if (slugExists) {
-      throw new DuplicateSlugError(dto.slug)
+      throw new DuplicateSlugError(slug)
     }
 
     // Create product entity
@@ -38,7 +42,7 @@ export class CreateProduct {
       id: crypto.randomUUID(),
       categoryId: dto.categoryId,
       name: dto.name,
-      slug: dto.slug,
+      slug,
       description: dto.description,
       price: dto.price,
       sku: dto.sku,

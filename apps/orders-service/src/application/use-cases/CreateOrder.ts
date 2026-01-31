@@ -29,12 +29,12 @@ interface Product {
 
 // External service clients (will be injected)
 export interface ICartServiceClient {
-  getCart(userId: string): Promise<Cart | null>
-  clearCart(userId: string): Promise<void>
+  getCart(userId: string, authToken?: string): Promise<Cart | null>
+  clearCart(userId: string, authToken?: string): Promise<void>
 }
 
 export interface IProductServiceClient {
-  getProduct(productId: string): Promise<Product | null>
+  getProduct(productId: string, authToken?: string): Promise<Product | null>
   updateStock(productId: string, quantity: number): Promise<void>
 }
 
@@ -45,20 +45,20 @@ export class CreateOrder {
     private productServiceClient: IProductServiceClient,
   ) {}
 
-  async execute(dto: CreateOrderDto): Promise<OrderResponseDto> {
+  async execute(dto: CreateOrderDto, authToken?: string): Promise<OrderResponseDto> {
     let savedOrder: Order | null = null
     const updatedProducts: Array<{ productId: string; quantity: number }> = []
 
     try {
       // 1. Get cart from cart-service
-      const cart = await this.cartServiceClient.getCart(dto.userId)
+      const cart = await this.cartServiceClient.getCart(dto.userId, authToken)
       if (!cart || cart.items.length === 0) {
         throw new EmptyCartError()
       }
 
       // 2. Verify products and stock availability
       for (const cartItem of cart.items) {
-        const product = await this.productServiceClient.getProduct(cartItem.productId)
+        const product = await this.productServiceClient.getProduct(cartItem.productId, authToken)
         if (!product) {
           throw new Error(`Product ${cartItem.productId} not found`)
         }
@@ -99,7 +99,7 @@ export class CreateOrder {
 
       // 7. Clear cart
       try {
-        await this.cartServiceClient.clearCart(dto.userId)
+        await this.cartServiceClient.clearCart(dto.userId, authToken)
       } catch (cartError) {
         // Cart clearing is not critical - log warning but don't fail the order
         console.warn('Warning: Failed to clear cart after order creation:', cartError)

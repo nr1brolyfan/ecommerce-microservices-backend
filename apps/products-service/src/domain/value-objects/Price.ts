@@ -4,8 +4,10 @@ export class Price {
   private readonly value: number
 
   constructor(value: number) {
-    this.validate(value)
-    this.value = value
+    // Round to 2 decimal places to handle floating point precision issues
+    const roundedValue = Math.round(value * 100) / 100
+    this.validate(roundedValue)
+    this.value = roundedValue
   }
 
   private validate(value: number): void {
@@ -17,8 +19,9 @@ export class Price {
       throw new ValidationError('Price cannot exceed 999,999.99')
     }
 
-    // Check max 2 decimal places
-    if (!Number.isInteger(value * 100)) {
+    // Check max 2 decimal places using string comparison to avoid floating point issues
+    const decimalPlaces = (value.toString().split('.')[1] || '').length
+    if (decimalPlaces > 2) {
       throw new ValidationError('Price can have at most 2 decimal places')
     }
   }

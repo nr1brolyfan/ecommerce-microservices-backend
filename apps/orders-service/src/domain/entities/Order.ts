@@ -3,7 +3,7 @@ import type { OrderStatus } from '../../infrastructure/database/schema.js'
 import type { OrderItem } from './OrderItem.js'
 
 export class Order extends BaseEntity {
-  public updatedAt: Date
+  public override updatedAt: Date
 
   constructor(
     id: string,

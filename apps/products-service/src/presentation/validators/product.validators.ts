@@ -10,7 +10,8 @@ export const createProductSchema = z.object({
   slug: z
     .string()
     .min(3, 'Slug must be at least 3 characters')
-    .max(255, 'Slug must not exceed 255 characters'),
+    .max(255, 'Slug must not exceed 255 characters')
+    .optional(),
   description: z.string().optional(),
   price: z
     .number()
@@ -66,7 +67,8 @@ export const createCategorySchema = z.object({
   slug: z
     .string()
     .min(3, 'Slug must be at least 3 characters')
-    .max(255, 'Slug must not exceed 255 characters'),
+    .max(255, 'Slug must not exceed 255 characters')
+    .optional(),
   description: z.string().optional(),
 })
 
