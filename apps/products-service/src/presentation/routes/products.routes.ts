@@ -1,5 +1,6 @@
 import { zValidator } from '@hono/zod-validator'
 import { authMiddleware, requireAdmin } from '@repo/shared-utils/auth'
+import type { JWTPayload } from '@repo/shared-utils/jwt'
 import { Hono } from 'hono'
 import { CreateProduct } from '../../application/use-cases/CreateProduct.js'
 import { DeleteProduct } from '../../application/use-cases/DeleteProduct.js'
@@ -14,7 +15,14 @@ import {
   updateProductSchema,
 } from '../validators/product.validators.js'
 
-const app = new Hono()
+type Variables = {
+  user: JWTPayload
+}
+
+const app = new Hono<{ Variables: Variables }>()
+
+// JWT Secret
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-in-production'
 
 // Initialize repositories
 const productRepository = new ProductRepository()
@@ -70,41 +78,47 @@ app.get('/:id', async (c) => {
 })
 
 // Admin-only routes
-app.post('/', authMiddleware, requireAdmin, zValidator('json', createProductSchema), async (c) => {
-  try {
-    const body = c.req.valid('json')
-    const product = await createProduct.execute(body)
+app.post(
+  '/',
+  authMiddleware(JWT_SECRET),
+  requireAdmin,
+  zValidator('json', createProductSchema),
+  async (c) => {
+    try {
+      const body = c.req.valid('json')
+      const product = await createProduct.execute(body)
 
-    return c.json(
-      {
-        success: true,
-        data: product,
-      },
-      201,
-    )
-  } catch (error: any) {
-    const status =
-      error.name === 'CategoryNotFoundError'
-        ? 404
-        : error.name === 'DuplicateSkuError' || error.name === 'DuplicateSlugError'
-          ? 409
-          : error.name === 'ValidationError'
-            ? 400
-            : 500
+      return c.json(
+        {
+          success: true,
+          data: product,
+        },
+        201,
+      )
+    } catch (error: any) {
+      const status =
+        error.name === 'CategoryNotFoundError'
+          ? 404
+          : error.name === 'DuplicateSkuError' || error.name === 'DuplicateSlugError'
+            ? 409
+            : error.name === 'ValidationError'
+              ? 400
+              : 500
 
-    return c.json(
-      {
-        success: false,
-        error: error.message,
-      },
-      status,
-    )
-  }
-})
+      return c.json(
+        {
+          success: false,
+          error: error.message,
+        },
+        status,
+      )
+    }
+  },
+)
 
 app.put(
   '/:id',
-  authMiddleware,
+  authMiddleware(JWT_SECRET),
   requireAdmin,
   zValidator('json', updateProductSchema),
   async (c) => {
@@ -138,7 +152,7 @@ app.put(
   },
 )
 
-app.delete('/:id', authMiddleware, requireAdmin, async (c) => {
+app.delete('/:id', authMiddleware(JWT_SECRET), requireAdmin, async (c) => {
   try {
     const id = c.req.param('id')
     await deleteProduct.execute(id)

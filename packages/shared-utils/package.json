@@ -15,9 +15,21 @@
       "types": "./dist/auth/middleware.d.ts",
       "default": "./dist/auth/middleware.js"
     },
+    "./auth/middleware": {
+      "types": "./dist/auth/middleware.d.ts",
+      "default": "./dist/auth/middleware.js"
+    },
+    "./auth/password": {
+      "types": "./dist/auth/password.d.ts",
+      "default": "./dist/auth/password.js"
+    },
     "./jwt": {
       "types": "./dist/jwt/index.d.ts",
       "default": "./dist/jwt/index.js"
+    },
+    "./jwt/types": {
+      "types": "./dist/jwt/types.d.ts",
+      "default": "./dist/jwt/types.js"
     },
     "./logger": {
       "types": "./dist/logger/index.d.ts",
@@ -26,6 +38,14 @@
     "./response": {
       "types": "./dist/response/index.d.ts",
       "default": "./dist/response/index.js"
+    },
+    "./response/error": {
+      "types": "./dist/response/error.d.ts",
+      "default": "./dist/response/error.js"
+    },
+    "./response/success": {
+      "types": "./dist/response/success.d.ts",
+      "default": "./dist/response/success.js"
     }
   },
   "scripts": {

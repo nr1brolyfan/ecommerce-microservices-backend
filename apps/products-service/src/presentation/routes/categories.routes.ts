@@ -1,12 +1,20 @@
 import { zValidator } from '@hono/zod-validator'
 import { authMiddleware, requireAdmin } from '@repo/shared-utils/auth'
+import type { JWTPayload } from '@repo/shared-utils/jwt'
 import { Hono } from 'hono'
 import { CreateCategory } from '../../application/use-cases/CreateCategory.js'
 import { GetCategories } from '../../application/use-cases/GetCategories.js'
 import { CategoryRepository } from '../../infrastructure/repositories/CategoryRepository.js'
 import { createCategorySchema } from '../validators/product.validators.js'
 
-const app = new Hono()
+type Variables = {
+  user: JWTPayload
+}
+
+const app = new Hono<{ Variables: Variables }>()
+
+// JWT Secret
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-in-production'
 
 // Initialize repository
 const categoryRepository = new CategoryRepository()
@@ -36,30 +44,36 @@ app.get('/', async (c) => {
 })
 
 // Admin-only routes
-app.post('/', authMiddleware, requireAdmin, zValidator('json', createCategorySchema), async (c) => {
-  try {
-    const body = c.req.valid('json')
-    const category = await createCategory.execute(body)
+app.post(
+  '/',
+  authMiddleware(JWT_SECRET),
+  requireAdmin,
+  zValidator('json', createCategorySchema),
+  async (c) => {
+    try {
+      const body = c.req.valid('json')
+      const category = await createCategory.execute(body)
 
-    return c.json(
-      {
-        success: true,
-        data: category,
-      },
-      201,
-    )
-  } catch (error: any) {
-    const status =
-      error.name === 'DuplicateSlugError' ? 409 : error.name === 'ValidationError' ? 400 : 500
+      return c.json(
+        {
+          success: true,
+          data: category,
+        },
+        201,
+      )
+    } catch (error: any) {
+      const status =
+        error.name === 'DuplicateSlugError' ? 409 : error.name === 'ValidationError' ? 400 : 500
 
-    return c.json(
-      {
-        success: false,
-        error: error.message,
-      },
-      status,
-    )
-  }
-})
+      return c.json(
+        {
+          success: false,
+          error: error.message,
+        },
+        status,
+      )
+    }
+  },
+)
 
 export default app

@@ -7,11 +7,11 @@ export interface ProductProps {
   categoryId: string
   name: string
   slug: string
-  description?: string
+  description?: string | undefined
   price: number
   sku: string
   stockQuantity: number
-  imageUrl?: string
+  imageUrl?: string | undefined
   createdAt: Date
   updatedAt: Date
 }

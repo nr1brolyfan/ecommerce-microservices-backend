@@ -1,5 +1,6 @@
 import { zValidator } from '@hono/zod-validator'
 import { authMiddleware, requireOwnership } from '@repo/shared-utils/auth'
+import type { JWTPayload } from '@repo/shared-utils/jwt'
 import { Hono } from 'hono'
 import { AddItemToCart } from '../../application/use-cases/AddItemToCart.js'
 import { ClearCart } from '../../application/use-cases/ClearCart.js'
@@ -10,7 +11,11 @@ import { config } from '../../config/env.js'
 import { CartRepository } from '../../infrastructure/repositories/CartRepository.js'
 import { addItemToCartSchema, updateCartItemSchema } from '../validators/cart.validators.js'
 
-const app = new Hono()
+type Variables = {
+  user: JWTPayload
+}
+
+const app = new Hono<{ Variables: Variables }>()
 
 // Initialize repository
 const cartRepository = new CartRepository()

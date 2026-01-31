@@ -1,5 +1,6 @@
 import { zValidator } from '@hono/zod-validator'
 import { authMiddleware, requireAdmin } from '@repo/shared-utils/auth/middleware'
+import type { JWTPayload } from '@repo/shared-utils/jwt'
 import { errorResponse } from '@repo/shared-utils/response/error'
 import { successResponse } from '@repo/shared-utils/response/success'
 import { Hono } from 'hono'
@@ -20,7 +21,14 @@ import {
   userIdParamSchema,
 } from '../validators/order.validators.js'
 
-const app = new Hono()
+type Variables = {
+  user: JWTPayload
+}
+
+const app = new Hono<{ Variables: Variables }>()
+
+// JWT Secret
+const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-key-change-in-production'
 
 // Initialize dependencies
 const orderRepository = new OrderRepository(db)
@@ -34,7 +42,7 @@ const getOrdersByUserIdUseCase = new GetOrdersByUserId(orderRepository)
 const updateOrderStatusUseCase = new UpdateOrderStatus(orderRepository)
 
 // POST /api/orders - Create order from cart
-app.post('/', authMiddleware, zValidator('json', createOrderSchema), async (c) => {
+app.post('/', authMiddleware(JWT_SECRET), zValidator('json', createOrderSchema), async (c) => {
   try {
     const body = c.req.valid('json')
     const user = c.get('user')
@@ -53,7 +61,7 @@ app.post('/', authMiddleware, zValidator('json', createOrderSchema), async (c) =
 })
 
 // GET /api/orders/:id - Get order by ID
-app.get('/:id', authMiddleware, zValidator('param', orderIdParamSchema), async (c) => {
+app.get('/:id', authMiddleware(JWT_SECRET), zValidator('param', orderIdParamSchema), async (c) => {
   try {
     const { id } = c.req.valid('param')
     const user = c.get('user')
@@ -73,28 +81,33 @@ app.get('/:id', authMiddleware, zValidator('param', orderIdParamSchema), async (
 })
 
 // GET /api/orders/user/:userId - Get orders by user ID
-app.get('/user/:userId', authMiddleware, zValidator('param', userIdParamSchema), async (c) => {
-  try {
-    const { userId } = c.req.valid('param')
-    const user = c.get('user')
+app.get(
+  '/user/:userId',
+  authMiddleware(JWT_SECRET),
+  zValidator('param', userIdParamSchema),
+  async (c) => {
+    try {
+      const { userId } = c.req.valid('param')
+      const user = c.get('user')
 
-    // Verify user can only view their own orders (unless admin)
-    if (user.role !== 'admin' && user.sub !== userId) {
-      return c.json(errorResponse('Forbidden: You can only view your own orders'), 403)
+      // Verify user can only view their own orders (unless admin)
+      if (user.role !== 'admin' && user.sub !== userId) {
+        return c.json(errorResponse('Forbidden: You can only view your own orders'), 403)
+      }
+
+      const orders = await getOrdersByUserIdUseCase.execute(userId)
+      return c.json(successResponse(orders))
+    } catch (error: any) {
+      console.error('Error fetching user orders:', error)
+      return c.json(errorResponse(error.message || 'Failed to fetch user orders'), 400)
     }
-
-    const orders = await getOrdersByUserIdUseCase.execute(userId)
-    return c.json(successResponse(orders))
-  } catch (error: any) {
-    console.error('Error fetching user orders:', error)
-    return c.json(errorResponse(error.message || 'Failed to fetch user orders'), 400)
-  }
-})
+  },
+)
 
 // PUT /api/orders/:id/status - Update order status (admin only)
 app.put(
   '/:id/status',
-  authMiddleware,
+  authMiddleware(JWT_SECRET),
   requireAdmin,
   zValidator('param', orderIdParamSchema),
   zValidator('json', updateOrderStatusSchema),

@@ -2,22 +2,22 @@ export interface CreateProductDto {
   categoryId: string
   name: string
   slug: string
-  description?: string
+  description?: string | undefined
   price: number
   sku: string
   stockQuantity: number
-  imageUrl?: string
+  imageUrl?: string | undefined
 }
 
 export interface UpdateProductDto {
-  categoryId?: string
-  name?: string
-  slug?: string
-  description?: string
-  price?: number
-  sku?: string
-  stockQuantity?: number
-  imageUrl?: string
+  categoryId?: string | undefined
+  name?: string | undefined
+  slug?: string | undefined
+  description?: string | undefined
+  price?: number | undefined
+  sku?: string | undefined
+  stockQuantity?: number | undefined
+  imageUrl?: string | undefined
 }
 
 export interface ProductResponseDto {
@@ -25,11 +25,11 @@ export interface ProductResponseDto {
   categoryId: string
   name: string
   slug: string
-  description?: string
+  description?: string | undefined
   price: number
   sku: string
   stockQuantity: number
-  imageUrl?: string
+  imageUrl?: string | undefined
   createdAt: Date
   updatedAt: Date
   category?: CategoryResponseDto
@@ -39,25 +39,25 @@ export interface CategoryResponseDto {
   id: string
   name: string
   slug: string
-  description?: string
+  description?: string | undefined
   createdAt: Date
 }
 
 export interface CreateCategoryDto {
   name: string
   slug: string
-  description?: string
+  description?: string | undefined
 }
 
 export interface UpdateCategoryDto {
-  name?: string
-  slug?: string
-  description?: string
+  name?: string | undefined
+  slug?: string | undefined
+  description?: string | undefined
 }
 
 export interface ProductFiltersDto {
-  categoryId?: string
-  minPrice?: number
-  maxPrice?: number
-  inStock?: boolean
+  categoryId?: string | undefined
+  minPrice?: number | undefined
+  maxPrice?: number | undefined
+  inStock?: boolean | undefined
 }

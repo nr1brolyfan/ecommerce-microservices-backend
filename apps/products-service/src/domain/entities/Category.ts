@@ -4,7 +4,7 @@ export interface CategoryProps {
   id: string
   name: string
   slug: string
-  description?: string
+  description?: string | undefined
   createdAt: Date
 }
 

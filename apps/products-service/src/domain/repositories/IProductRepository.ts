@@ -1,10 +1,10 @@
 import type { Product } from '../entities/Product.js'
 
 export interface ProductFilters {
-  categoryId?: string
-  minPrice?: number
-  maxPrice?: number
-  inStock?: boolean
+  categoryId?: string | undefined
+  minPrice?: number | undefined
+  maxPrice?: number | undefined
+  inStock?: boolean | undefined
 }
 
 export interface IProductRepository {

@@ -11,11 +11,11 @@ export class ProductRepository implements IProductRepository {
   async findById(id: string): Promise<Product | null> {
     const result = await db.select().from(products).where(eq(products.id, id)).limit(1)
 
-    if (result.length === 0) {
+    const row = result[0]
+    if (!row) {
       return null
     }
 
-    const row = result[0]
     return Product.fromPersistence({
       id: row.id,
       categoryId: row.categoryId,
@@ -78,11 +78,11 @@ export class ProductRepository implements IProductRepository {
   async findBySlug(slug: string): Promise<Product | null> {
     const result = await db.select().from(products).where(eq(products.slug, slug)).limit(1)
 
-    if (result.length === 0) {
+    const row = result[0]
+    if (!row) {
       return null
     }
 
-    const row = result[0]
     return Product.fromPersistence({
       id: row.id,
       categoryId: row.categoryId,
@@ -101,11 +101,11 @@ export class ProductRepository implements IProductRepository {
   async findBySku(sku: string): Promise<Product | null> {
     const result = await db.select().from(products).where(eq(products.sku, sku)).limit(1)
 
-    if (result.length === 0) {
+    const row = result[0]
+    if (!row) {
       return null
     }
 
-    const row = result[0]
     return Product.fromPersistence({
       id: row.id,
       categoryId: row.categoryId,
@@ -140,6 +140,10 @@ export class ProductRepository implements IProductRepository {
       .returning()
 
     const row = result[0]
+    if (!row) {
+      throw new Error('Failed to create product')
+    }
+
     return Product.fromPersistence({
       id: row.id,
       categoryId: row.categoryId,
@@ -173,6 +177,10 @@ export class ProductRepository implements IProductRepository {
     const result = await db.update(products).set(updateData).where(eq(products.id, id)).returning()
 
     const row = result[0]
+    if (!row) {
+      throw new Error('Failed to update product')
+    }
+
     return Product.fromPersistence({
       id: row.id,
       categoryId: row.categoryId,

@@ -8,16 +8,17 @@ export class CategoryRepository implements ICategoryRepository {
   async findById(id: string): Promise<Category | null> {
     const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1)
 
-    if (result.length === 0) {
+    const row = result[0]
+    if (!row) {
       return null
     }
 
     return Category.fromPersistence({
-      id: result[0].id,
-      name: result[0].name,
-      slug: result[0].slug,
-      description: result[0].description ?? undefined,
-      createdAt: result[0].createdAt,
+      id: row.id,
+      name: row.name,
+      slug: row.slug,
+      description: row.description ?? undefined,
+      createdAt: row.createdAt,
     })
   }
 
@@ -38,16 +39,17 @@ export class CategoryRepository implements ICategoryRepository {
   async findBySlug(slug: string): Promise<Category | null> {
     const result = await db.select().from(categories).where(eq(categories.slug, slug)).limit(1)
 
-    if (result.length === 0) {
+    const row = result[0]
+    if (!row) {
       return null
     }
 
     return Category.fromPersistence({
-      id: result[0].id,
-      name: result[0].name,
-      slug: result[0].slug,
-      description: result[0].description ?? undefined,
-      createdAt: result[0].createdAt,
+      id: row.id,
+      name: row.name,
+      slug: row.slug,
+      description: row.description ?? undefined,
+      createdAt: row.createdAt,
     })
   }
 
@@ -63,12 +65,17 @@ export class CategoryRepository implements ICategoryRepository {
       })
       .returning()
 
+    const row = result[0]
+    if (!row) {
+      throw new Error('Failed to create category')
+    }
+
     return Category.fromPersistence({
-      id: result[0].id,
-      name: result[0].name,
-      slug: result[0].slug,
-      description: result[0].description ?? undefined,
-      createdAt: result[0].createdAt,
+      id: row.id,
+      name: row.name,
+      slug: row.slug,
+      description: row.description ?? undefined,
+      createdAt: row.createdAt,
     })
   }
 
@@ -85,12 +92,17 @@ export class CategoryRepository implements ICategoryRepository {
       .where(eq(categories.id, id))
       .returning()
 
+    const row = result[0]
+    if (!row) {
+      throw new Error('Failed to update category')
+    }
+
     return Category.fromPersistence({
-      id: result[0].id,
-      name: result[0].name,
-      slug: result[0].slug,
-      description: result[0].description ?? undefined,
-      createdAt: result[0].createdAt,
+      id: row.id,
+      name: row.name,
+      slug: row.slug,
+      description: row.description ?? undefined,
+      createdAt: row.createdAt,
     })
   }
 
