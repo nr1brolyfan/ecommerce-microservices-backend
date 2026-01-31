@@ -196,53 +196,6 @@
       "name": "Products Service",
       "item": [
         {
-          "name": "Get All Products",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{products_url}}/api/products",
-              "host": ["{{products_url}}"],
-              "path": ["api", "products"]
-            },
-            "description": "Get all products (public)"
-          },
-          "response": []
-        },
-        {
-          "name": "Get Products with Filters",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{products_url}}/api/products?inStock=true&minPrice=10&maxPrice=1000",
-              "host": ["{{products_url}}"],
-              "path": ["api", "products"],
-              "query": [
-                {
-                  "key": "inStock",
-                  "value": "true"
-                },
-                {
-                  "key": "minPrice",
-                  "value": "10"
-                },
-                {
-                  "key": "maxPrice",
-                  "value": "1000"
-                },
-                {
-                  "key": "category",
-                  "value": "electronics",
-                  "disabled": true
-                }
-              ]
-            },
-            "description": "Get products with filters (inStock, minPrice, maxPrice, category)"
-          },
-          "response": []
-        },
-        {
           "name": "Get Product by ID",
           "event": [
             {
@@ -368,34 +321,6 @@
               "path": ["api", "categories"]
             },
             "description": "Get all categories (public)"
-          },
-          "response": []
-        },
-        {
-          "name": "Get Category by ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    const jsonData = pm.response.json();",
-                  "    pm.environment.set(\"category_id\", jsonData.data.id);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{products_url}}/api/categories/{{category_id}}",
-              "host": ["{{products_url}}"],
-              "path": ["api", "categories", "{{category_id}}"]
-            },
-            "description": "Get single category by ID (public)"
           },
           "response": []
         },
@@ -727,20 +652,6 @@
               "path": ["api", "reviews", "product", "{{product_id}}"]
             },
             "description": "Get all reviews for a product (public)"
-          },
-          "response": []
-        },
-        {
-          "name": "Get Product Review Stats",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{reviews_url}}/api/reviews/product/{{product_id}}/stats",
-              "host": ["{{reviews_url}}"],
-              "path": ["api", "reviews", "product", "{{product_id}}", "stats"]
-            },
-            "description": "Get review statistics for a product (public)"
           },
           "response": []
         },

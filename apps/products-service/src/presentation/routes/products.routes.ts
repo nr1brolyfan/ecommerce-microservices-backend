@@ -5,15 +5,10 @@ import { Hono } from 'hono'
 import { CreateProduct } from '../../application/use-cases/CreateProduct.js'
 import { DeleteProduct } from '../../application/use-cases/DeleteProduct.js'
 import { GetProductById } from '../../application/use-cases/GetProductById.js'
-import { GetProducts } from '../../application/use-cases/GetProducts.js'
 import { UpdateProduct } from '../../application/use-cases/UpdateProduct.js'
 import { CategoryRepository } from '../../infrastructure/repositories/CategoryRepository.js'
 import { ProductRepository } from '../../infrastructure/repositories/ProductRepository.js'
-import {
-  createProductSchema,
-  productFiltersSchema,
-  updateProductSchema,
-} from '../validators/product.validators.js'
+import { createProductSchema, updateProductSchema } from '../validators/product.validators.js'
 
 type Variables = {
   user: JWTPayload
@@ -30,32 +25,11 @@ const categoryRepository = new CategoryRepository()
 
 // Initialize use cases
 const createProduct = new CreateProduct(productRepository, categoryRepository)
-const getProducts = new GetProducts(productRepository)
 const getProductById = new GetProductById(productRepository)
 const updateProduct = new UpdateProduct(productRepository, categoryRepository)
 const deleteProduct = new DeleteProduct(productRepository)
 
 // Public routes
-app.get('/', zValidator('query', productFiltersSchema), async (c) => {
-  try {
-    const filters = c.req.valid('query')
-    const products = await getProducts.execute(filters)
-
-    return c.json({
-      success: true,
-      data: products,
-    })
-  } catch (error: any) {
-    return c.json(
-      {
-        success: false,
-        error: error.message,
-      },
-      500,
-    )
-  }
-})
-
 app.get('/:id', async (c) => {
   try {
     const id = c.req.param('id')

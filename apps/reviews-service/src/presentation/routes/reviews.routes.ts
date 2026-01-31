@@ -6,7 +6,6 @@ import { Hono } from 'hono'
 // Import use cases
 import { CreateReview } from '../../application/use-cases/CreateReview.js'
 import { DeleteReview } from '../../application/use-cases/DeleteReview.js'
-import { GetReviewStats } from '../../application/use-cases/GetReviewStats.js'
 import { GetReviewsByProduct } from '../../application/use-cases/GetReviewsByProduct.js'
 import { GetReviewsByUser } from '../../application/use-cases/GetReviewsByUser.js'
 import { UpdateReview } from '../../application/use-cases/UpdateReview.js'
@@ -42,7 +41,6 @@ const ordersClient = new OrdersClient()
 const createReviewUseCase = new CreateReview(reviewRepository, productsClient, ordersClient)
 const getReviewsByProductUseCase = new GetReviewsByProduct(reviewRepository)
 const getReviewsByUserUseCase = new GetReviewsByUser(reviewRepository)
-const getReviewStatsUseCase = new GetReviewStats(reviewRepository)
 const updateReviewUseCase = new UpdateReview(reviewRepository)
 const deleteReviewUseCase = new DeleteReview(reviewRepository)
 
@@ -91,19 +89,6 @@ app.get('/product/:productId', zValidator('param', productIdParamSchema), async 
   } catch (error: any) {
     console.error('Error fetching product reviews:', error)
     return c.json(errorResponse(error.message || 'Failed to fetch product reviews'), 400)
-  }
-})
-
-// GET /api/reviews/product/:productId/stats - Get review stats (public)
-app.get('/product/:productId/stats', zValidator('param', productIdParamSchema), async (c) => {
-  try {
-    const { productId } = c.req.valid('param')
-
-    const stats = await getReviewStatsUseCase.execute(productId)
-    return c.json(successResponse(stats))
-  } catch (error: any) {
-    console.error('Error fetching review stats:', error)
-    return c.json(errorResponse(error.message || 'Failed to fetch review stats'), 400)
   }
 })
 
