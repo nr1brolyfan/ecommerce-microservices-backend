@@ -4,39 +4,10 @@
  * NOTE: Requires auth and products databases to be seeded first
  */
 
+import { orderItems, orders } from '@repo/database-schemas/orders'
 import { sql } from 'drizzle-orm'
-import { decimal, integer, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createConnection, getDatabaseUrl } from '../utils/database.js'
-
-// Define schema (copied from orders-service to avoid circular dependencies)
-const orderStatusEnum = pgEnum('order_status', [
-  'pending',
-  'processing',
-  'shipped',
-  'delivered',
-  'cancelled',
-])
-
-const orders = pgTable('orders', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').notNull(),
-  status: orderStatusEnum('status').notNull().default('pending'),
-  totalAmount: decimal('total_amount', { precision: 10, scale: 2 }).notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-})
-
-const orderItems = pgTable('order_items', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  orderId: uuid('order_id')
-    .notNull()
-    .references(() => orders.id, { onDelete: 'cascade' }),
-  productId: uuid('product_id').notNull(),
-  productName: varchar('product_name', { length: 255 }).notNull(),
-  quantity: integer('quantity').notNull(),
-  priceAtOrder: decimal('price_at_order', { precision: 10, scale: 2 }).notNull(),
-  subtotal: decimal('subtotal', { precision: 10, scale: 2 }).notNull(),
-})
+import { ensureTablesExist } from '../utils/validation.js'
 
 /**
  * Seed orders database with sample orders
@@ -49,6 +20,9 @@ export async function seedOrders() {
     const ordersDb = createConnection(getDatabaseUrl('orders'))
     const authDb = createConnection(getDatabaseUrl('auth'))
     const productsDb = createConnection(getDatabaseUrl('products'))
+
+    // Ensure tables exist
+    await ensureTablesExist(ordersDb, ['orders', 'order_items'])
 
     // Clear existing data
     console.log('   🧹 Clearing existing orders...')

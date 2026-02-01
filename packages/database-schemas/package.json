@@ -1,0 +1,29 @@
+{
+  "name": "@repo/database-schemas",
+  "version": "1.0.0",
+  "description": "Shared Drizzle database schemas for all microservices",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./auth": "./src/auth.schema.ts",
+    "./products": "./src/products.schema.ts",
+    "./cart": "./src/cart.schema.ts",
+    "./orders": "./src/orders.schema.ts",
+    "./reviews": "./src/reviews.schema.ts"
+  },
+  "scripts": {
+    "build": "echo 'No build needed for schema package'",
+    "clean": "rm -rf dist node_modules"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.39.3"
+  },
+  "devDependencies": {
+    "@repo/shared-config": "workspace:*",
+    "@types/node": "^20.19.30",
+    "typescript": "^5.9.3"
+  }
+}

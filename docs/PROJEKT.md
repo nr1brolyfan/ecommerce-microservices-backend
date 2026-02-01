@@ -878,35 +878,95 @@ export default defineConfig({
 })
 ```
 
-### 8.3 Migracje
+### 8.3 Migracje i Schema Push
+
+**WAŻNE**: Drizzle używa `drizzle-kit push` do synchronizacji schematu z bazą danych.
 
 ```bash
-# Generowanie migracji
-pnpm drizzle-kit generate:pg
+# Push schema do bazy (tworzy/aktualizuje tabele)
+pnpm db:push
 
-# Uruchomienie migracji
-pnpm drizzle-kit push:pg
+# Push dla konkretnego serwisu
+pnpm --filter auth-service db:push
+pnpm --filter products-service db:push
 ```
+
+**Kolejność operacji**:
+1. **`pnpm db:push`** - Najpierw tworzy tabele w bazie danych
+2. **`pnpm seed`** - Potem wypełnia dane
+
+**Nie odwrotnie!** Seed nie tworzy tabel.
 
 ### 8.4 Seeding
 
+**WAŻNE**: Seedy **importują schemat bezpośrednio z serwisów** (Single Source of Truth).
+
 **Pakiet scripts** zawiera:
 - `seed-auth.ts` - użytkownicy (1 admin, 5 users)
-- `seed-products.ts` - kategorie i produkty (3 kategorie, 20 produktów)
+- `seed-products.ts` - kategorie i produkty (5 kategorii, 25 produktów)
 - `seed-orders.ts` - przykładowe zamówienia
 - `seed-reviews.ts` - przykładowe opinie
-- `seed-all.ts` - wszystkie powyższe
+- `seed-all.ts` - wszystkie powyższe w prawidłowej kolejności
 
 **Użycie**:
 ```bash
-pnpm scripts seed-all
+# Seed wszystkich baz (po db:push!)
+pnpm seed
+
+# Seed konkretnej bazy
+pnpm seed:auth
+pnpm seed:products
+
+# Reset: push schema + seed (ZALECANE)
+pnpm reset
+
+# Reset z czyszczeniem bazy (nuke all data)
+pnpm reset:clean
 ```
+
+**Walidacja**: Każdy seed sprawdza czy tabele istnieją przed seedowaniem. Jeśli nie, wyświetli błąd z instrukcją `pnpm db:push`.
 
 ---
 
 ## 9. Shared Packages
 
-### 9.1 @repo/shared-types
+### 9.1 @repo/database-schemas
+
+**Cel**: Centralne definicje schematów bazy danych (Single Source of Truth)
+
+**Struktura**:
+```
+database-schemas/
+└── src/
+    ├── auth.schema.ts         # Users table schema
+    ├── products.schema.ts     # Products & categories schemas
+    ├── cart.schema.ts         # Cart tables schemas
+    ├── orders.schema.ts       # Orders tables schemas
+    ├── reviews.schema.ts      # Reviews table schema
+    └── index.ts               # Re-exports all schemas
+```
+
+**Użycie w serwisach** (re-export pattern):
+```typescript
+// apps/auth-service/src/infrastructure/database/schema.ts
+export * from '@repo/database-schemas/auth'
+```
+
+**Użycie w seedach**:
+```typescript
+// packages/scripts/src/seed/seed-auth.ts
+import { users } from '@repo/database-schemas/auth'
+```
+
+**Zalety**:
+- ✅ Single Source of Truth - schemat w jednym miejscu
+- ✅ Brak duplikacji - services i seeds używają tej samej definicji
+- ✅ Automatyczna synchronizacja - zmiana w schemacie propaguje się wszędzie
+- ✅ Czysty dependency graph - brak circular dependencies
+
+---
+
+### 9.2 @repo/shared-types
 
 **Cel**: Współdzielone typy TypeScript, DTOs, domain models
 
@@ -956,7 +1016,7 @@ export interface RegisterDto {
 }
 ```
 
-### 9.2 @repo/shared-utils
+### 9.3 @repo/shared-utils
 
 **Cel**: Wspólne utility functions
 
@@ -999,7 +1059,7 @@ export function errorResponse(message: string, status: number = 400) {
 }
 ```
 
-### 9.3 @repo/shared-config
+### 9.4 @repo/shared-config
 
 **Cel**: Wspólne konfiguracje (ESLint, TypeScript, Prettier)
 
@@ -1026,7 +1086,7 @@ shared-config/
 }
 ```
 
-### 9.4 @repo/scripts
+### 9.5 @repo/scripts
 
 **Cel**: Skrypty utility (seeding, setup, migrations)
 
@@ -1109,11 +1169,14 @@ docker-compose up -d
 cp .env.example .env
 # Edytuj .env z odpowiednimi wartościami
 
-# 5. Uruchomienie migracji
-pnpm db:migrate
+# 5. Push schema do bazy danych (tworzy tabele)
+pnpm db:push
 
 # 6. Seed danych testowych
-pnpm scripts seed-all
+pnpm seed
+
+# ALTERNATYWNIE: Zrób wszystko jedną komendą
+pnpm reset
 ```
 
 ### 10.3 Zmienne Środowiskowe

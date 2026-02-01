@@ -3,24 +3,11 @@
  * Creates admin and regular users using Drizzle Seed
  */
 
+import { users } from '@repo/database-schemas/auth'
 import { hashPassword } from '@repo/shared-utils'
-import { pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { seed } from 'drizzle-seed'
 import { createConnection, getDatabaseUrl } from '../utils/database.js'
-
-// Define schema (copied from auth-service to avoid circular dependencies)
-const roleEnum = pgEnum('role', ['user', 'admin'])
-
-const users = pgTable('users', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
-  firstName: varchar('first_name', { length: 100 }).notNull(),
-  lastName: varchar('last_name', { length: 100 }).notNull(),
-  role: roleEnum('role').notNull().default('user'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-})
+import { ensureTablesExist } from '../utils/validation.js'
 
 /**
  * Seed auth database with 1 admin and 5 regular users
@@ -31,6 +18,9 @@ export async function seedAuth() {
   try {
     const databaseUrl = getDatabaseUrl('auth')
     const db = createConnection(databaseUrl)
+
+    // Ensure tables exist
+    await ensureTablesExist(db, ['users'])
 
     // Clear existing data
     console.log('   🧹 Clearing existing users...')

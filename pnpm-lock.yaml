@@ -32,6 +32,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.1
         version: 0.4.3(hono@4.11.7)(zod@3.25.76)
+      '@repo/database-schemas':
+        specifier: workspace:*
+        version: link:../../packages/database-schemas
       '@repo/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
@@ -84,6 +87,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.1
         version: 0.4.3(hono@4.11.7)(zod@3.25.76)
+      '@repo/database-schemas':
+        specifier: workspace:*
+        version: link:../../packages/database-schemas
       '@repo/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
@@ -130,6 +136,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.1
         version: 0.4.3(hono@4.11.7)(zod@3.25.76)
+      '@repo/database-schemas':
+        specifier: workspace:*
+        version: link:../../packages/database-schemas
       '@repo/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
@@ -176,6 +185,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.1
         version: 0.4.3(hono@4.11.7)(zod@3.25.76)
+      '@repo/database-schemas':
+        specifier: workspace:*
+        version: link:../../packages/database-schemas
       '@repo/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
@@ -222,6 +234,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.1
         version: 0.4.3(hono@4.11.7)(zod@3.25.76)
+      '@repo/database-schemas':
+        specifier: workspace:*
+        version: link:../../packages/database-schemas
       '@repo/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
@@ -260,8 +275,27 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
+  packages/database-schemas:
+    dependencies:
+      drizzle-orm:
+        specifier: ^0.39.3
+        version: 0.39.3(postgres@3.4.8)
+    devDependencies:
+      '@repo/shared-config':
+        specifier: workspace:*
+        version: link:../shared-config
+      '@types/node':
+        specifier: ^20.19.30
+        version: 20.19.30
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/scripts:
     dependencies:
+      '@repo/database-schemas':
+        specifier: workspace:*
+        version: link:../database-schemas
       dotenv:
         specifier: ^16.6.1
         version: 16.6.1

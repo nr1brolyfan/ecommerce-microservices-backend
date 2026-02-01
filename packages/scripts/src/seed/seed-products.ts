@@ -3,34 +3,10 @@
  * Creates categories and products using Drizzle Seed
  */
 
-import { decimal, integer, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { categories, products } from '@repo/database-schemas/products'
 import { seed } from 'drizzle-seed'
 import { createConnection, getDatabaseUrl } from '../utils/database.js'
-
-// Define schema (copied from products-service to avoid circular dependencies)
-const categories = pgTable('categories', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  name: varchar('name', { length: 255 }).notNull(),
-  slug: varchar('slug', { length: 255 }).notNull().unique(),
-  description: text('description'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-})
-
-const products = pgTable('products', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  categoryId: uuid('category_id')
-    .notNull()
-    .references(() => categories.id, { onDelete: 'cascade' }),
-  name: varchar('name', { length: 255 }).notNull(),
-  slug: varchar('slug', { length: 255 }).notNull().unique(),
-  description: text('description'),
-  price: decimal('price', { precision: 10, scale: 2 }).notNull(),
-  sku: varchar('sku', { length: 100 }).notNull().unique(),
-  stockQuantity: integer('stock_quantity').notNull().default(0),
-  imageUrl: varchar('image_url', { length: 500 }),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-})
+import { ensureTablesExist } from '../utils/validation.js'
 
 // Predefined categories with realistic data
 const categoryData = [
@@ -70,6 +46,9 @@ export async function seedProducts() {
   try {
     const databaseUrl = getDatabaseUrl('products')
     const db = createConnection(databaseUrl)
+
+    // Ensure tables exist
+    await ensureTablesExist(db, ['categories', 'products'])
 
     // Clear existing data
     console.log('   🧹 Clearing existing products and categories...')

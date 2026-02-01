@@ -4,28 +4,10 @@
  * NOTE: Requires auth, products, and orders databases to be seeded first
  */
 
+import { reviews } from '@repo/database-schemas/reviews'
 import { sql } from 'drizzle-orm'
-import { integer, pgTable, text, timestamp, uniqueIndex, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createConnection, getDatabaseUrl } from '../utils/database.js'
-
-// Define schema (copied from reviews-service to avoid circular dependencies)
-const reviews = pgTable(
-  'reviews',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    productId: uuid('product_id').notNull(),
-    userId: uuid('user_id').notNull(),
-    orderId: uuid('order_id').notNull(),
-    rating: integer('rating').notNull(),
-    title: varchar('title', { length: 255 }).notNull(),
-    comment: text('comment'),
-    createdAt: timestamp('created_at').notNull().defaultNow(),
-    updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  },
-  (table) => ({
-    uniqueUserProduct: uniqueIndex('unique_user_product_idx').on(table.userId, table.productId),
-  }),
-)
+import { ensureTablesExist } from '../utils/validation.js'
 
 // Review titles by rating
 const reviewTitles = {
@@ -80,6 +62,9 @@ export async function seedReviews() {
   try {
     const reviewsDb = createConnection(getDatabaseUrl('reviews'))
     const ordersDb = createConnection(getDatabaseUrl('orders'))
+
+    // Ensure tables exist
+    await ensureTablesExist(reviewsDb, ['reviews'])
 
     // Clear existing data
     console.log('   🧹 Clearing existing reviews...')

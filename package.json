@@ -32,6 +32,8 @@
     "seed:products": "pnpm --filter scripts seed:products",
     "seed:orders": "pnpm --filter scripts seed:orders",
     "seed:reviews": "pnpm --filter scripts seed:reviews",
+    "reset": "pnpm db:push && pnpm seed",
+    "reset:clean": "docker-compose down -v && docker-compose up -d && sleep 5 && pnpm db:push && pnpm seed",
     "test:smoke": "./scripts/smoke-test.sh",
     "test:reset": "./scripts/reset-and-seed.sh"
   },
