@@ -7,29 +7,25 @@ import { cartItems, carts } from '../database/schema.js'
 
 export class CartRepository implements ICartRepository {
   async findByUserId(userId: string): Promise<Cart | null> {
-    const cart = await db.query.carts.findFirst({
-      where: eq(carts.userId, userId),
-      with: {
-        items: true,
-      },
-    })
+    const cartResult = await db.select().from(carts).where(eq(carts.userId, userId)).limit(1)
 
+    const cart = cartResult[0]
     if (!cart) return null
 
-    return this.toDomain(cart)
+    const items = await db.select().from(cartItems).where(eq(cartItems.cartId, cart.id))
+
+    return this.toDomain({ ...cart, items })
   }
 
   async findById(id: string): Promise<Cart | null> {
-    const cart = await db.query.carts.findFirst({
-      where: eq(carts.id, id),
-      with: {
-        items: true,
-      },
-    })
+    const cartResult = await db.select().from(carts).where(eq(carts.id, id)).limit(1)
 
+    const cart = cartResult[0]
     if (!cart) return null
 
-    return this.toDomain(cart)
+    const items = await db.select().from(cartItems).where(eq(cartItems.cartId, cart.id))
+
+    return this.toDomain({ ...cart, items })
   }
 
   async create(userId: string): Promise<Cart> {
@@ -126,10 +122,9 @@ export class CartRepository implements ICartRepository {
   }
 
   async clear(userId: string): Promise<void> {
-    const cart = await db.query.carts.findFirst({
-      where: eq(carts.userId, userId),
-    })
+    const cartResult = await db.select().from(carts).where(eq(carts.userId, userId)).limit(1)
 
+    const cart = cartResult[0]
     if (!cart) return
 
     await db.delete(cartItems).where(eq(cartItems.cartId, cart.id))
@@ -139,10 +134,13 @@ export class CartRepository implements ICartRepository {
   }
 
   async getItemByProductId(cartId: string, productId: string): Promise<CartItemEntity | null> {
-    const item = await db.query.cartItems.findFirst({
-      where: and(eq(cartItems.cartId, cartId), eq(cartItems.productId, productId)),
-    })
+    const itemResult = await db
+      .select()
+      .from(cartItems)
+      .where(and(eq(cartItems.cartId, cartId), eq(cartItems.productId, productId)))
+      .limit(1)
 
+    const item = itemResult[0]
     if (!item) return null
 
     return CartItemEntity.create({

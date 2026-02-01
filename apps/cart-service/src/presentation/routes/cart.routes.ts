@@ -35,6 +35,7 @@ const ownership = requireOwnership('userId')
 app.get('/:userId', auth, ownership, async (c) => {
   try {
     const userId = c.req.param('userId')
+    console.log('Getting cart for userId:', userId)
     const cart = await getCart.execute(userId)
 
     return c.json({
@@ -42,10 +43,11 @@ app.get('/:userId', auth, ownership, async (c) => {
       data: cart.toJSON(),
     })
   } catch (error: any) {
+    console.error('Cart error:', error)
     return c.json(
       {
         success: false,
-        error: error.message,
+        error: error.message || 'Internal server error',
       },
       500,
     )

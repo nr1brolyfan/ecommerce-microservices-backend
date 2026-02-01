@@ -1,4 +1,4 @@
-import { and, avg, count, eq } from 'drizzle-orm'
+import { and, avg, count, desc, eq } from 'drizzle-orm'
 import { Review } from '../../domain/entities/Review.js'
 import type { IReviewRepository, ReviewStats } from '../../domain/repositories/IReviewRepository.js'
 import { Rating } from '../../domain/value-objects/Rating.js'
@@ -32,38 +32,42 @@ export class ReviewRepository implements IReviewRepository {
   }
 
   async findById(id: string): Promise<Review | null> {
-    const review = await this.db.query.reviews.findFirst({
-      where: eq(reviews.id, id),
-    })
+    const reviewResult = await this.db.select().from(reviews).where(eq(reviews.id, id)).limit(1)
 
+    const review = reviewResult[0]
     if (!review) return null
 
     return this.mapToEntity(review)
   }
 
   async findByProductId(productId: string): Promise<Review[]> {
-    const productReviews = await this.db.query.reviews.findMany({
-      where: eq(reviews.productId, productId),
-      orderBy: (reviews, { desc }) => [desc(reviews.createdAt)],
-    })
+    const productReviews = await this.db
+      .select()
+      .from(reviews)
+      .where(eq(reviews.productId, productId))
+      .orderBy(desc(reviews.createdAt))
 
     return productReviews.map((review) => this.mapToEntity(review))
   }
 
   async findByUserId(userId: string): Promise<Review[]> {
-    const userReviews = await this.db.query.reviews.findMany({
-      where: eq(reviews.userId, userId),
-      orderBy: (reviews, { desc }) => [desc(reviews.createdAt)],
-    })
+    const userReviews = await this.db
+      .select()
+      .from(reviews)
+      .where(eq(reviews.userId, userId))
+      .orderBy(desc(reviews.createdAt))
 
     return userReviews.map((review) => this.mapToEntity(review))
   }
 
   async findByProductAndUser(productId: string, userId: string): Promise<Review | null> {
-    const review = await this.db.query.reviews.findFirst({
-      where: and(eq(reviews.productId, productId), eq(reviews.userId, userId)),
-    })
+    const reviewResult = await this.db
+      .select()
+      .from(reviews)
+      .where(and(eq(reviews.productId, productId), eq(reviews.userId, userId)))
+      .limit(1)
 
+    const review = reviewResult[0]
     if (!review) return null
 
     return this.mapToEntity(review)
@@ -150,21 +154,23 @@ export class ReviewRepository implements IReviewRepository {
   }
 
   async existsById(id: string): Promise<boolean> {
-    const review = await this.db.query.reviews.findFirst({
-      where: eq(reviews.id, id),
-      columns: { id: true },
-    })
+    const reviewResult = await this.db
+      .select({ id: reviews.id })
+      .from(reviews)
+      .where(eq(reviews.id, id))
+      .limit(1)
 
-    return !!review
+    return reviewResult.length > 0
   }
 
   async existsByProductAndUser(productId: string, userId: string): Promise<boolean> {
-    const review = await this.db.query.reviews.findFirst({
-      where: and(eq(reviews.productId, productId), eq(reviews.userId, userId)),
-      columns: { id: true },
-    })
+    const reviewResult = await this.db
+      .select({ id: reviews.id })
+      .from(reviews)
+      .where(and(eq(reviews.productId, productId), eq(reviews.userId, userId)))
+      .limit(1)
 
-    return !!review
+    return reviewResult.length > 0
   }
 
   // Helper method to map database result to domain entity

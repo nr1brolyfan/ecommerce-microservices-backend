@@ -5,6 +5,7 @@ import { Hono } from 'hono'
 import { CreateProduct } from '../../application/use-cases/CreateProduct.js'
 import { DeleteProduct } from '../../application/use-cases/DeleteProduct.js'
 import { GetProductById } from '../../application/use-cases/GetProductById.js'
+import { GetProducts } from '../../application/use-cases/GetProducts.js'
 import { UpdateProduct } from '../../application/use-cases/UpdateProduct.js'
 import { CategoryRepository } from '../../infrastructure/repositories/CategoryRepository.js'
 import { ProductRepository } from '../../infrastructure/repositories/ProductRepository.js'
@@ -25,11 +26,33 @@ const categoryRepository = new CategoryRepository()
 
 // Initialize use cases
 const createProduct = new CreateProduct(productRepository, categoryRepository)
+const getProducts = new GetProducts(productRepository)
 const getProductById = new GetProductById(productRepository)
 const updateProduct = new UpdateProduct(productRepository, categoryRepository)
 const deleteProduct = new DeleteProduct(productRepository)
 
 // Public routes
+app.get('/', async (c) => {
+  try {
+    const categoryId = c.req.query('categoryId')
+    const filters = categoryId ? { categoryId } : undefined
+    const products = await getProducts.execute(filters)
+
+    return c.json({
+      success: true,
+      data: products,
+    })
+  } catch (error: any) {
+    return c.json(
+      {
+        success: false,
+        error: error.message,
+      },
+      500,
+    )
+  }
+})
+
 app.get('/:id', async (c) => {
   try {
     const id = c.req.param('id')

@@ -141,7 +141,3 @@ microservices/
 ├── postman_collection.json    # Kolekcja Postman
 └── docker-compose.yml         # PostgreSQL
 ```
-
-## Dokumentacja
-
-Pełna dokumentacja projektu znajduje się w pliku `docs/PROJEKT.md`.

@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 import { Order } from '../../domain/entities/Order.js'
 import { OrderItem } from '../../domain/entities/OrderItem.js'
 import type { IOrderRepository } from '../../domain/repositories/IOrderRepository.js'
@@ -53,39 +53,50 @@ export class OrderRepository implements IOrderRepository {
   }
 
   async findById(id: string): Promise<Order | null> {
-    const order = await this.db.query.orders.findFirst({
-      where: eq(orders.id, id),
-      with: {
-        items: true,
-      },
-    })
+    const orderResult = await this.db.select().from(orders).where(eq(orders.id, id)).limit(1)
 
+    const order = orderResult[0]
     if (!order) return null
 
-    return this.mapToEntity(order)
+    const items = await this.db.select().from(orderItems).where(eq(orderItems.orderId, order.id))
+
+    return this.mapToEntity({ ...order, items })
   }
 
   async findByUserId(userId: string): Promise<Order[]> {
-    const userOrders = await this.db.query.orders.findMany({
-      where: eq(orders.userId, userId),
-      with: {
-        items: true,
-      },
-      orderBy: (orders, { desc }) => [desc(orders.createdAt)],
-    })
+    const userOrders = await this.db
+      .select()
+      .from(orders)
+      .where(eq(orders.userId, userId))
+      .orderBy(desc(orders.createdAt))
 
-    return userOrders.map((order) => this.mapToEntity(order))
+    const ordersWithItems = await Promise.all(
+      userOrders.map(async (order) => {
+        const items = await this.db
+          .select()
+          .from(orderItems)
+          .where(eq(orderItems.orderId, order.id))
+        return { ...order, items }
+      }),
+    )
+
+    return ordersWithItems.map((order) => this.mapToEntity(order))
   }
 
   async findAll(): Promise<Order[]> {
-    const allOrders = await this.db.query.orders.findMany({
-      with: {
-        items: true,
-      },
-      orderBy: (orders, { desc }) => [desc(orders.createdAt)],
-    })
+    const allOrders = await this.db.select().from(orders).orderBy(desc(orders.createdAt))
 
-    return allOrders.map((order) => this.mapToEntity(order))
+    const ordersWithItems = await Promise.all(
+      allOrders.map(async (order) => {
+        const items = await this.db
+          .select()
+          .from(orderItems)
+          .where(eq(orderItems.orderId, order.id))
+        return { ...order, items }
+      }),
+    )
+
+    return ordersWithItems.map((order) => this.mapToEntity(order))
   }
 
   async updateStatus(id: string, status: OrderStatus): Promise<Order> {
@@ -105,12 +116,13 @@ export class OrderRepository implements IOrderRepository {
   }
 
   async existsById(id: string): Promise<boolean> {
-    const order = await this.db.query.orders.findFirst({
-      where: eq(orders.id, id),
-      columns: { id: true },
-    })
+    const orderResult = await this.db
+      .select({ id: orders.id })
+      .from(orders)
+      .where(eq(orders.id, id))
+      .limit(1)
 
-    return !!order
+    return orderResult.length > 0
   }
 
   // Helper method to map database result to domain entity
