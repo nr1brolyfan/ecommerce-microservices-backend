@@ -64,11 +64,11 @@ export async function seedReviews() {
     const ordersDb = createConnection(getDatabaseUrl('orders'))
 
     // Ensure tables exist
-    await ensureTablesExist(reviewsDb, ['reviews'])
+    await ensureTablesExist(reviewsDb, ['reviews'], 'reviews')
 
     // Clear existing data
     console.log('   🧹 Clearing existing reviews...')
-    await reviewsDb.execute('TRUNCATE TABLE reviews CASCADE')
+    await reviewsDb.execute('TRUNCATE TABLE reviews.reviews CASCADE')
 
     // Fetch orders with items (only delivered/shipped orders)
     const ordersResult = await ordersDb.execute<{
@@ -82,8 +82,8 @@ export async function seedReviews() {
         o.user_id,
         oi.product_id,
         o.status
-      FROM orders o
-      JOIN order_items oi ON o.id = oi.order_id
+      FROM orders.orders o
+      JOIN orders.order_items oi ON o.id = oi.order_id
       WHERE o.status IN ('delivered', 'shipped', 'processing')
       LIMIT 20
     `)

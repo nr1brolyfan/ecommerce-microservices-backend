@@ -130,6 +130,70 @@ export * from '@repo/database-schemas/my-service'
 - **Type-safe** - Full TypeScript support across all services
 - **No circular deps** - Clean monorepo architecture
 
+## 🗄️ Database Management
+
+This package now provides **centralized database management** for all microservices.
+
+### Commands
+
+From the root of the monorepo:
+
+```bash
+# Push all schemas to their databases in parallel
+pnpm db:push
+
+# Generate migrations for all schemas
+pnpm db:generate
+
+# Open Drizzle Studio
+pnpm db:studio
+```
+
+From this package:
+
+```bash
+# Push all schemas
+pnpm db:push
+
+# Push individual service schema
+pnpm db:push:auth
+pnpm db:push:products
+pnpm db:push:cart
+pnpm db:push:orders
+pnpm db:push:reviews
+
+# Generate all migrations
+pnpm db:generate
+```
+
+### Configuration
+
+All database configurations are centralized in this package:
+
+- `drizzle-auth.config.ts` - Auth service database
+- `drizzle-products.config.ts` - Products service database
+- `drizzle-cart.config.ts` - Cart service database
+- `drizzle-orders.config.ts` - Orders service database
+- `drizzle-reviews.config.ts` - Reviews service database
+
+Database URLs are read from root `.env` file:
+
+```env
+AUTH_DB_URL=postgresql://postgres:postgres@localhost:5432/auth_db
+PRODUCTS_DB_URL=postgresql://postgres:postgres@localhost:5432/products_db
+CART_DB_URL=postgresql://postgres:postgres@localhost:5432/cart_db
+ORDERS_DB_URL=postgresql://postgres:postgres@localhost:5432/orders_db
+REVIEWS_DB_URL=postgresql://postgres:postgres@localhost:5432/reviews_db
+```
+
+### Benefits of Centralized DB Management
+
+- ✅ **One command** - `pnpm db:push` instead of multiple sequential pushes
+- ✅ **Parallel execution** - All schemas pushed simultaneously
+- ✅ **Single source of truth** - All configs in one place
+- ✅ **Better DX** - Faster and more convenient
+- ✅ **Consistent** - Same config format for all services
+
 ## 📚 Related
 
 - [Drizzle ORM Docs](https://orm.drizzle.team/)

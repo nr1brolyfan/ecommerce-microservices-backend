@@ -48,11 +48,11 @@ export async function seedProducts() {
     const db = createConnection(databaseUrl)
 
     // Ensure tables exist
-    await ensureTablesExist(db, ['categories', 'products'])
+    await ensureTablesExist(db, ['categories', 'products'], 'products')
 
     // Clear existing data
     console.log('   🧹 Clearing existing products and categories...')
-    await db.execute('TRUNCATE TABLE products, categories CASCADE')
+    await db.execute('TRUNCATE TABLE products.products, products.categories CASCADE')
 
     // Insert categories first (needed for foreign keys)
     const insertedCategories = await db.insert(categories).values(categoryData).returning()

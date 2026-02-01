@@ -22,15 +22,15 @@ export async function seedOrders() {
     const productsDb = createConnection(getDatabaseUrl('products'))
 
     // Ensure tables exist
-    await ensureTablesExist(ordersDb, ['orders', 'order_items'])
+    await ensureTablesExist(ordersDb, ['orders', 'order_items'], 'orders')
 
     // Clear existing data
     console.log('   🧹 Clearing existing orders...')
-    await ordersDb.execute('TRUNCATE TABLE orders CASCADE')
+    await ordersDb.execute('TRUNCATE TABLE orders.orders CASCADE')
 
     // Fetch user IDs from auth database
     const usersResult = await authDb.execute<{ id: string }>(
-      sql`SELECT id FROM users WHERE role = 'user' LIMIT 5`,
+      sql`SELECT id FROM auth.users WHERE role = 'user' LIMIT 5`,
     )
     const users = Array.from(usersResult)
     const userIds = users.map((u: any) => u.id)
@@ -44,7 +44,7 @@ export async function seedOrders() {
       id: string
       name: string
       price: string
-    }>(sql`SELECT id, name, price FROM products LIMIT 15`)
+    }>(sql`SELECT id, name, price FROM products.products LIMIT 15`)
     const products = Array.from(productsResult)
 
     if (products.length === 0) {

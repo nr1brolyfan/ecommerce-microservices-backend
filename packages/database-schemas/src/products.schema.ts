@@ -1,8 +1,11 @@
 import { relations } from 'drizzle-orm'
-import { decimal, integer, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { decimal, integer, pgSchema, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+
+// Products schema
+export const productsSchema = pgSchema('products')
 
 // Categories table
-export const categories = pgTable('categories', {
+export const categories = productsSchema.table('categories', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 255 }).notNull().unique(),
@@ -11,7 +14,7 @@ export const categories = pgTable('categories', {
 })
 
 // Products table
-export const products = pgTable('products', {
+export const products = productsSchema.table('products', {
   id: uuid('id').primaryKey().defaultRandom(),
   categoryId: uuid('category_id')
     .notNull()

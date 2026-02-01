@@ -1,8 +1,11 @@
 import { relations } from 'drizzle-orm'
-import { decimal, integer, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { decimal, integer, pgSchema, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+
+// Orders schema
+export const ordersSchema = pgSchema('orders')
 
 // Order status ENUM
-export const orderStatusEnum = pgEnum('order_status', [
+export const orderStatusEnum = ordersSchema.enum('order_status', [
   'pending',
   'processing',
   'shipped',
@@ -11,7 +14,7 @@ export const orderStatusEnum = pgEnum('order_status', [
 ])
 
 // Orders table
-export const orders = pgTable('orders', {
+export const orders = ordersSchema.table('orders', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id').notNull(),
   status: orderStatusEnum('status').notNull().default('pending'),
@@ -21,7 +24,7 @@ export const orders = pgTable('orders', {
 })
 
 // Order items table (snapshot of products at order time)
-export const orderItems = pgTable('order_items', {
+export const orderItems = ordersSchema.table('order_items', {
   id: uuid('id').primaryKey().defaultRandom(),
   orderId: uuid('order_id')
     .notNull()

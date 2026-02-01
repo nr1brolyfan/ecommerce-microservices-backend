@@ -1,10 +1,13 @@
-import { pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { pgEnum, pgSchema, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+
+// Auth schema
+export const authSchema = pgSchema('auth')
 
 // Enum for user roles
-export const roleEnum = pgEnum('role', ['user', 'admin'])
+export const roleEnum = authSchema.enum('role', ['user', 'admin'])
 
 // Users table
-export const users = pgTable('users', {
+export const users = authSchema.table('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   passwordHash: varchar('password_hash', { length: 255 }).notNull(),

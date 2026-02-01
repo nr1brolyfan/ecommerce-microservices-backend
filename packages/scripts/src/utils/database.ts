@@ -21,13 +21,13 @@ export function createConnection(databaseUrl: string) {
 
 /**
  * Get database URL from environment
+ * Now returns single DATABASE_URL for all services (using PostgreSQL schemas)
  */
-export function getDatabaseUrl(service: 'auth' | 'products' | 'cart' | 'orders' | 'reviews') {
-  const envKey = `${service.toUpperCase()}_DATABASE_URL`
-  const url = process.env[envKey]
+export function getDatabaseUrl(_service?: 'auth' | 'products' | 'cart' | 'orders' | 'reviews') {
+  const url = process.env.DATABASE_URL
 
   if (!url) {
-    throw new Error(`${envKey} environment variable not set`)
+    throw new Error('DATABASE_URL environment variable not set')
   }
 
   return url

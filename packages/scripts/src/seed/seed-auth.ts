@@ -20,11 +20,11 @@ export async function seedAuth() {
     const db = createConnection(databaseUrl)
 
     // Ensure tables exist
-    await ensureTablesExist(db, ['users'])
+    await ensureTablesExist(db, ['users'], 'auth')
 
     // Clear existing data
     console.log('   🧹 Clearing existing users...')
-    await db.execute('TRUNCATE TABLE users CASCADE')
+    await db.execute('TRUNCATE TABLE auth.users CASCADE')
 
     // Hash password once for all users
     const hashedPassword = await hashPassword('Password123!')

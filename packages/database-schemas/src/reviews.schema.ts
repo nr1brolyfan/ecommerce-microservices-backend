@@ -1,7 +1,10 @@
-import { integer, pgTable, text, timestamp, uniqueIndex, uuid, varchar } from 'drizzle-orm/pg-core'
+import { integer, pgSchema, text, timestamp, uniqueIndex, uuid, varchar } from 'drizzle-orm/pg-core'
+
+// Reviews schema
+export const reviewsSchema = pgSchema('reviews')
 
 // Reviews table
-export const reviews = pgTable(
+export const reviews = reviewsSchema.table(
   'reviews',
   {
     id: uuid('id').primaryKey().defaultRandom(),

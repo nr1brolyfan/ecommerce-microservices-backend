@@ -16,14 +16,21 @@
   },
   "scripts": {
     "build": "echo 'No build needed for schema package'",
-    "clean": "rm -rf dist node_modules"
+    "clean": "rm -rf dist node_modules migrations",
+    "db:push": "drizzle-kit push --force",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "drizzle-orm": "^0.39.3"
+    "drizzle-orm": "^0.39.3",
+    "dotenv": "^16.4.5",
+    "postgres": "^3.4.5"
   },
   "devDependencies": {
     "@repo/shared-config": "workspace:*",
     "@types/node": "^20.19.30",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }

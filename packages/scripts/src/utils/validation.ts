@@ -10,16 +10,18 @@ import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
  * Check if a table exists in the database
  * @param db - Drizzle database instance
  * @param tableName - Name of the table to check
+ * @param schema - PostgreSQL schema name (default: 'public')
  * @returns true if table exists, false otherwise
  */
 export async function tableExists(
   db: PostgresJsDatabase<any>,
   tableName: string,
+  schema = 'public',
 ): Promise<boolean> {
   const result = await db.execute<{ exists: boolean }>(
     sql`SELECT EXISTS (
       SELECT FROM information_schema.tables 
-      WHERE table_schema = 'public' 
+      WHERE table_schema = ${schema}
       AND table_name = ${tableName}
     ) as exists`,
   )
@@ -32,16 +34,18 @@ export async function tableExists(
  * Throws an error if any table is missing
  * @param db - Drizzle database instance
  * @param tables - Array of table names to check
+ * @param schema - PostgreSQL schema name (default: 'public')
  * @throws Error if any table doesn't exist
  */
 export async function ensureTablesExist(
   db: PostgresJsDatabase<any>,
   tables: string[],
+  schema = 'public',
 ): Promise<void> {
   const missingTables: string[] = []
 
   for (const table of tables) {
-    const exists = await tableExists(db, table)
+    const exists = await tableExists(db, table, schema)
     if (!exists) {
       missingTables.push(table)
     }

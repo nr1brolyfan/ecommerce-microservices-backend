@@ -23,7 +23,7 @@ System składa się z 5 niezależnych mikroserwisów:
 - **Orders Service** (port 3003) - składanie i zarządzanie zamówieniami
 - **Reviews Service** (port 3004) - opinie i oceny produktów
 
-Każdy serwis posiada własną bazę danych PostgreSQL i komunikuje się przez REST API.
+Każdy serwis używa wspólnej bazy danych PostgreSQL z oddzielnymi schematami (auth, products, cart, orders, reviews) i komunikuje się przez REST API.
 
 ## Wymagania (na czym ja robiłem i testowałem)
 
@@ -43,15 +43,17 @@ pnpm install
 docker-compose up -d
 ```
 
-### 3. Skonfiguruj zmienne środowiskowe
+### 3. Skonfiguruj zmienne środowiskowe (opcjonalne)
 Pliki `.env` są już skonfigurowane w każdym serwisie (`apps/*/env`).
 
 Sprawdź i dostosuj jeśli potrzeba (szczególnie dane połączenia do PostgreSQL).
 
-### 4. Uruchom migracje baz danych
+### 4. Uruchom migracje bazy danych
 ```bash
 pnpm db:push
 ```
+
+Ten polecenie pushuje **wszystkie** schematy (auth, products, cart, orders, reviews) do jednej bazy danych w **jednym** wykonaniu.
 
 ### 5. (Opcjonalnie) Załaduj dane testowe
 ```bash
